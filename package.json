@@ -1,0 +1,33 @@
+{
+  "name": "HelperBotRework",
+  "version": "1.0.0",
+  "description": "Helper Bot is a bot developed to improve Discord servers! How much with multiple very useful commands!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "authors": [
+    "Fabrizio I.#3075",
+    "ZorGame#8769"
+  ],
+  "license": "ISC",
+  "devDependencies": {
+    "@discordjs/opus": "^0.5.0",
+    "distube": "^2.8.12",
+    "ffmpeg-static": "^4.3.0",
+    "fs": "0.0.1-security",
+    "mongoose": "^5.12.3",
+    "youtube-dl": "^3.4.1"
+  },
+  "dependencies": {
+    "cpu-stat": "^2.0.1",
+    "discord.js":"github:adrian3221/discord.js#v12",
+    "easy-xpcord": "^0.0.2",
+    "humanize-duration": "^3.25.2",
+    "moment": "^2.29.1",
+    "moment-duration-format": "^2.3.2",
+    "ms": "^2.1.2",
+    "os": "^0.1.1"
+  }
+}
