@@ -1,4 +1,4 @@
-const { inspect } = require("util");
+const Util = require("util");
 
 module.exports = class EvalCommand extends require("../../Class/Command") {
   constructor(client) {
@@ -29,25 +29,29 @@ module.exports = class EvalCommand extends require("../../Class/Command") {
         `${client.emotes.error} | **Debes ingresar algo para evaluar!**`
       );
     try {
-      const evaled = await eval(args.join(" "));
-      let msg = await message.channel.send(
-        `(${typeof evaled})\n${inspect(evaled, { depth: 0 }).replace(
-          this.client.token,
-          "CONTENT_PRIVATE"
-        )}`,
-        { code: "js", split: { char: "", maxLength: 1999 } }
+      let output = await eval(args.join(" "));
+      let type = typeof output;
+      if (typeof output !== "string")
+        output = Util.inspect(output, { depth: 0 });
+
+      if (output.length >= 1020) output = `${output.substr(0, 1010)}...`;
+
+      let msg = await message.reply(
+        `(${
+          type.substring(0, 1).toUpperCase() + type.substring(1)
+        }) ${output.replace(client.token, "Contenido Privado")}`,
+        { code: "js" }
       );
-      for (let i of msg) {
-        i.react("832659637026291712");
-        i.awaitReactions((reaction, user) => {
-          if (user.id != message.author.id) return;
-          if (reaction.emoji.id == "832659637026291712") return i.delete();
-        });
-      }
+      msg.react("832659637026291712");
+      msg.awaitReactions((reaction, user) => {
+        if (user.id != message.author.id) return;
+        if (reaction.emoji.id == "832659637026291712") return msg.delete();
+      });
     } catch (e) {
-      message.channel.send(
-        `${client.emotes.error} | **${e.name}:** ${e.message}`
-      );
+      message.reply(`${e.name}: ${e.message}`, {
+        code: "js",
+        split: { char: "", maxLength: 1999 },
+      });
     }
   }
 };
