@@ -2,7 +2,7 @@ const Helper = require("./Class/Client.js");
 
 const client = new Helper({
   ws: {
-    intents: 32511,
+    intents: 16127,
   },
   allowedMentions: {
     parse: [],
