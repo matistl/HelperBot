@@ -1,7 +1,7 @@
 {
     emotes = {
-        "error": "<:HelperBot_Error:832659637026291712>",
-        "success": "<:HelperBot_Success:832659865301286996>",
+        "error": "<:HelperBot_Cross:836408158120837180>",
+        "success": "<:HelperBot_Success:836408773877956669>",
         "warning": "<:HelperBot_Warning:832613813718220871>",
         "playing": "<:HelperBot_MusicalNote:832239561983787038>",
         "add": "<:HelperBot_Add:834117454376206336>",

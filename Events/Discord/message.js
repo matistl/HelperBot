@@ -1,5 +1,6 @@
 const cooldown = new Set();
 const cooldownBlacklist = new Set();
+const cooldownNoCommandFound = new Set();
 const Discord = require("discord.js");
 const ms = require("ms");
 const prefixSchema = require("../../Util/Models/prefix.js");
@@ -35,7 +36,7 @@ module.exports = class Message {
       if (message.author.bot) return;
       if (message.channel.type === "dm") return;
       if (!message.content.startsWith(prefix)) return;
-      if (!message.content === prefix) return;
+      if (message.content === prefix) return;
       // if (!message.content.startsWith(prefix)) {
 
       //     if (cooldown.has(message.author.id)) return;
@@ -56,9 +57,15 @@ module.exports = class Message {
       const cmd =
         client.commands.get(command) ||
         client.commands.find((c) => c.information.aliases.includes(command));
-      if (!cmd) return;
       try {
-        if (!message.guild.me.permissions.has("SEND_MESSAGES")) return;
+        if (
+          !message.channel.permissionsFor(message.guild.me).has("SEND_MESSAGES")
+        )
+          return message.author
+            .send(
+              `${client.emotes.error} | **No tengo el permiso de enviar mensajes!**\n${client.emotes.warning} | **Servidor:** \`${message.guild.name}\``
+            )
+            .catch(() => {});
       } catch (error) {
         message.author
           .send(
@@ -67,7 +74,23 @@ module.exports = class Message {
           .catch(() => {});
       }
       let blacklist1 = await blacklist.findOne({ ID: message.author.id });
-      if (blacklist1) {
+      if (!cmd) {
+        if (cooldownNoCommandFound.has(message.author.id)) return;
+        cooldownNoCommandFound.add(message.author.id);
+        setTimeout(() => {
+          cooldownNoCommandFound.delete(message.author.id);
+        }, 15000);
+        const embedNoCMD = new Discord.MessageEmbed()
+          .setTitle(`${client.emotes.error} | **Acceso Desconocido**`)
+          .setDescription([
+            "El comando ingresado no existe. Asegúrate de que este escrito correctamente!",
+            `Usa: \`${await client.getPrefix(
+              message
+            )}help\` para obtener la lista de comandos!`,
+          ])
+          .setColor("#FF0000");
+        return message.reply(embedNoCMD);
+      } else if (blacklist1) {
         if (cooldownBlacklist.has(message.author.id)) return;
         cooldownBlacklist.add(message.author.id);
         setTimeout(() => {
