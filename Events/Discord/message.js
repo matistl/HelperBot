@@ -73,6 +73,22 @@ module.exports = class Message {
           )
           .catch(() => {});
       }
+      try {
+        if (
+          !message.channel.permissionsFor(message.guild.me).has("EMBED_LINKS")
+        )
+          return message
+            .reply(
+              `${client.emotes.error} | **No tengo el permiso de enviar embeds!**\n${client.emotes.warning} | **Permiso Requerido:** \`EMBED_LINKS\``
+            )
+            .catch(() => {});
+      } catch (error) {
+        message
+          .reply(
+            `${client.emotes.error} | **No tengo el permiso de envia embeds!**\n${client.emotes.warning} | **Permiso Requerido:** \`EMBED_LINKS\``
+          )
+          .catch(() => {});
+      }
       let blacklist1 = await blacklist.findOne({ ID: message.author.id });
       if (!cmd) {
         if (cooldownNoCommandFound.has(message.author.id)) return;
@@ -107,6 +123,10 @@ module.exports = class Message {
             `**\`Autor:\`** ${client.users.cache.get(blacklist1.Author).tag}`,
             `**\`Tiempo:\`** ${ms(Date.now() - blacklist1.Date)}`,
           ])
+          .addField(
+            "**¿Deseas apelar?**",
+            `Pudes intentar apelar la sanción en el [Servidor de soporte](https://discord.gg/b4s2kQwVm8)`
+          )
           .setColor("#FF0000");
         return message.channel.send(embed);
       }

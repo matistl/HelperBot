@@ -71,15 +71,15 @@ module.exports = class HelpCommand extends require("../../Class/Command") {
       const Utility = client.commands
         .filter((x) => x.information.category == "Utility")
         .map((z) => "`" + z.information.name + "`")
-        .join(" | ");
+        .join(" ");
       const Configuration = client.commands
         .filter((x) => x.information.category == "Configuration")
         .map((z) => "`" + z.information.name + "`")
-        .join(" | ");
+        .join(" ");
       const Music = client.commands
         .filter((x) => x.information.category == "Music")
         .map((z) => "`" + z.information.name + "`")
-        .join(" | ");
+        .join(" ");
 
       const embedCommands = new client.discord.MessageEmbed()
         .setTitle("__**Comandos del bot**__")
