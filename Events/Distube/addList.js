@@ -7,10 +7,10 @@ module.exports = class addList {
         try {
 
             const embedAddList = new client.discord.MessageEmbed()
-                // .setAuthor("➕ | Playlist Added", null, "https://discord.com/oauth2/authorize?client_id=761300013317488660&scope=bot&permissions=8")
-                .setTitle(`${client.emotes.add} | **Playlist Añadida**`)
-                .setDescription(`[${playlist.name}](${playlist.url}) [**${playlist.songs.length}** songs]`)
-                .setFooter(playlist.user.username + "#" + playlist.user.discriminator, playlist.user.displayAvatarURL({ dynamic: true }))
+                // .setAuthor("➕ | playList Added", null, "https://discord.com/oauth2/authorize?client_id=761300013317488660&scope=bot&permissions=8")
+                .setTitle(`${client.emotes.add} | **playList Añadida**`)
+                .setDescription(`[${playList.name}](${playList.url}) [**${playList.songs.length}** songs]`)
+                .setFooter(playList.user.username + "#" + playList.user.discriminator, playList.user.displayAvatarURL({ dynamic: true }))
                 .setColor(client.colores.dodgerBlueColor);
             message.channel.send(embedAddList);
 

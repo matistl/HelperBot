@@ -4,7 +4,7 @@ module.exports = class SkipCommand extends require("../../Class/Command") {
   constructor(client) {
     super(client, {
       name: "skip",
-      aliases: [],
+      aliases: ["s"],
       description: "Salta una canción",
       usage: "skip",
       dirname: __dirname,
