@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const Logs = require("../../Util/Models/logs.js");
 
 module.exports = class MessageDelete {
   constructor(client) {
@@ -23,6 +24,55 @@ module.exports = class MessageDelete {
       });
       snipes.splice(10);
       client.snipes.set(message.channel.id, snipes);
+      let ChannelLogs = await Logs.findOne({ guildID: message.guild.id });
+      if (!ChannelLogs) return;
+      const getLogs = await message.guild.fetchAuditLogs({
+        limit: 1,
+        type: "MESSAGE_DELETE",
+      });
+      const LOGS = await getLogs.entries.first();
+      if (!LOGS) return;
+      const { executor } = LOGS;  
+      let xd;
+      if (message.guild.me.permissions.has("VIEW_AUDIT_LOG")) {
+        xd = executor.username + "#" + executor.discriminator;
+      } else {
+        xd = "No tengo permiso para verlo"
+      }
+      if (message.content.length >= 1900)
+        message.content = `${message.content.substr(0, 1800)}...`;
+      const embedMessageDelete = new Discord.MessageEmbed()
+        .setAuthor(
+          message.guild.name + " | Un mensaje fue eliminado",
+          message.guild.iconURL({ dynamic: true })
+        )
+        .setDescription(
+          `**Contenido:**\n${
+            message.content ||
+            `[URL de la imagen](${
+              message.attachments.first()
+                ? message.attachments.first().proxyURL
+                : null
+            })`
+          }`
+        )
+        .addField(
+          "**Información:**",
+          `**\`Autor del mensaje:\`** <@!${message.author.id}> | ${
+            message.author.id
+          }\n**\`Canal:\`** <#${message.channel.id}> | ${
+            message.channel.id
+          }\n**\`Eliminado por:\`** ${xd}`
+        )
+        .setImage(
+          message.attachments.first()
+            ? message.attachments.first().proxyURL
+            : null
+        )
+        .setColor(message.member.displayHexColor || client.colores.redColor);
+      message.guild.channels.cache
+        .get(ChannelLogs.channelID)
+        .send(embedMessageDelete);
     } catch (e) {
       this.client.error({
         type: "event",

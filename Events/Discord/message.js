@@ -3,7 +3,6 @@ const cooldownBlacklist = new Set();
 const cooldownNoCommandFound = new Set();
 const Discord = require("discord.js");
 const ms = require("ms");
-const prefixSchema = require("../../Util/Models/prefix.js");
 const commandSetup = require("../../Util/Models/commandSetup.js");
 
 module.exports = class Message {
@@ -14,22 +13,6 @@ module.exports = class Message {
     let client = this.client;
     try {
       const blacklist = require("../../Util/Models/blacklist.js");
-      client.getPrefix = async function (message) {
-        if (!message.guild) return;
-        let custom;
-
-        const Data = await prefixSchema
-          .findOne({ Guild: message.guild.id })
-          .catch((err) => console.log(err));
-
-        if (Data) {
-          custom = Data.Prefix;
-        } else {
-          custom = "h!";
-        }
-        return custom;
-      };
-
       //Argumentos
       if (!message.guild) return;
       let prefix = await client.getPrefix(message);
@@ -37,19 +20,6 @@ module.exports = class Message {
       if (message.channel.type === "dm") return;
       if (!message.content.startsWith(prefix)) return;
       if (message.content === prefix) return;
-      // if (!message.content.startsWith(prefix)) {
-
-      //     if (cooldown.has(message.author.id)) return;
-
-      //     cooldown.add(message.author.id)
-
-      //     setTimeout(() => {
-      //         cooldown.delete(message.author.id);
-      //     }, 10000)//10s
-
-      //     await client.xpcord.giveXP(message.author.id, message.guild.id, Math.floor(Math.random() * 9) + 1, message)
-      //     return;
-      // }
 
       //Comando y argumentos
       const args = message.content.slice(prefix.length).trim().split(/ +/g);
@@ -96,14 +66,28 @@ module.exports = class Message {
         setTimeout(() => {
           cooldownNoCommandFound.delete(message.author.id);
         }, 15000);
+        const comandosSimilares =
+          require("string-similarity")
+            .findBestMatch(
+              command,
+              client.commands.map((x) => x.information.name)
+            )
+            .ratings.filter((s) => s.rating >= 0.5)
+            .slice(0, 3)
+            .map((x) => x.target)
+            .join(", ") || "No hay comandos similares";
         const embedNoCMD = new Discord.MessageEmbed()
           .setTitle(`${client.emotes.error} | **Acceso Desconocido**`)
           .setDescription([
             "El comando ingresado no existe. Asegúrate de que este escrito correctamente!",
-            `Usa: \`${await client.getPrefix(
+            `Usa: **\`${await client.getPrefix(
               message
-            )}help\` para obtener la lista de comandos!`,
+            )}help\`** para obtener la lista completa de comandos!`,
           ])
+          .addField(
+            "**Comandos similares:**",
+            comandosSimilares || "No hay comandos similares"
+          )
           .setColor("#FF0000");
         return message.reply(embedNoCMD);
       } else if (blacklist1) {

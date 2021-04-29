@@ -1,4 +1,5 @@
 const Helper = require("./Class/Client.js");
+const prefixSchema = require("./Util/Models/prefix.js");
 
 const client = new Helper({
   ws: {
@@ -8,6 +9,7 @@ const client = new Helper({
     parse: [],
   },
   partials: ["MESSAGE", "REACTION", "CHANNEL", "GUILD_MEMBER", "USER"],
+  fetchAllMembers: true,
 });
 
 const DisTube = require("distube");
@@ -17,6 +19,22 @@ const { config } = require("dotenv");
 config();
 const inicio = async () => {
   try {
+    //Funciones
+    client.getPrefix = async function (message) {
+      if (!message.guild) return;
+      let custom;
+
+      const Data = await prefixSchema
+        .findOne({ Guild: message.guild.id })
+        .catch((err) => console.log(err));
+
+      if (Data) {
+        custom = Data.Prefix;
+      } else {
+        custom = "h!";
+      }
+      return custom;
+    };
     //Lista
     const Commands = await Read("./Commands");
     const Events = await Read("./Events/Discord");
@@ -75,6 +93,9 @@ const inicio = async () => {
       leaveOnStop: true,
       leaveOnFinish: true,
       leaveOnEmpty: true,
+      youtubeDL: true,
+      youtubeCookie: process.env.YOUTUBE_COOKIE,
+      youtubeIdentityToken: process.env.KEY,
       customFilters: {
         cursed: "vibrato=f=6.5,tremolo,aresample=48000,asetrate=48000*1.25",
         "8d": "apulsator=hz=0.075",

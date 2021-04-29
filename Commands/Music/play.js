@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const { getPreview, getTracks } = require("spotify-url-info");
 
 module.exports = class PlayCommand extends require("../../Class/Command") {
   constructor(client) {

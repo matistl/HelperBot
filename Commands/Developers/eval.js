@@ -1,4 +1,5 @@
 const Util = require("util");
+const Discord = require("discord.js");
 
 module.exports = class EvalCommand extends require("../../Class/Command") {
   constructor(client) {
@@ -32,9 +33,9 @@ module.exports = class EvalCommand extends require("../../Class/Command") {
       let output = await eval(args.join(" "));
       let type = typeof output;
       if (typeof output !== "string")
-        output = Util.inspect(output, { depth: 0 });
+        output = Util.inspect(output, { depth: 1 });
 
-      if (output.length >= 1020) output = `${output.substr(0, 1010)}...`;
+      if (output.length >= 2000) output = `${output.substr(0, 1900)}...`;
 
       let msg = await message.reply(
         `(${
@@ -42,10 +43,10 @@ module.exports = class EvalCommand extends require("../../Class/Command") {
         }) ${output.replace(client.token, "Contenido Privado")}`,
         { code: "js" }
       );
-      msg.react("832659637026291712");
+      msg.react("836408158120837180");
       msg.awaitReactions((reaction, user) => {
         if (user.id != message.author.id) return;
-        if (reaction.emoji.id == "832659637026291712") return msg.delete();
+        if (reaction.emoji.id == "836408158120837180") return msg.delete();
       });
     } catch (e) {
       message.reply(`${e.name}: ${e.message}`, {

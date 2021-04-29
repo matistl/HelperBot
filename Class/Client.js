@@ -91,7 +91,7 @@ class Helper extends Client {
         this.aliases.set(alias, cmds.information.name)
       );
     } catch (e) {
-      //   console.error(e);
+        console.error(e);
     }
   }
   async eventosDis(ruta) {
