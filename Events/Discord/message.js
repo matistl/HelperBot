@@ -77,7 +77,7 @@ module.exports = class Message {
             .map((x) => x.target)
             .join(", ") || "No hay comandos similares";
         const embedNoCMD = new Discord.MessageEmbed()
-          .setTitle(`${client.emotes.error} | **Acceso Desconocido**`)
+          .setTitle(`${client.emotes.error} | **Comando No Encontrado**`)
           .setDescription([
             "El comando ingresado no existe. Asegúrate de que este escrito correctamente!",
             `Usa: **\`${await client.getPrefix(

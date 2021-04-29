@@ -26,19 +26,6 @@ module.exports = class MessageDelete {
       client.snipes.set(message.channel.id, snipes);
       let ChannelLogs = await Logs.findOne({ guildID: message.guild.id });
       if (!ChannelLogs) return;
-      const getLogs = await message.guild.fetchAuditLogs({
-        limit: 1,
-        type: "MESSAGE_DELETE",
-      });
-      const LOGS = await getLogs.entries.first();
-      if (!LOGS) return;
-      const { executor } = LOGS;  
-      let xd;
-      if (message.guild.me.permissions.has("VIEW_AUDIT_LOG")) {
-        xd = executor.username + "#" + executor.discriminator;
-      } else {
-        xd = "No tengo permiso para verlo"
-      }
       if (message.content.length >= 1900)
         message.content = `${message.content.substr(0, 1800)}...`;
       const embedMessageDelete = new Discord.MessageEmbed()
@@ -58,11 +45,7 @@ module.exports = class MessageDelete {
         )
         .addField(
           "**Información:**",
-          `**\`Autor del mensaje:\`** <@!${message.author.id}> | ${
-            message.author.id
-          }\n**\`Canal:\`** <#${message.channel.id}> | ${
-            message.channel.id
-          }\n**\`Eliminado por:\`** ${xd}`
+          `**\`Autor del mensaje:\`** <@!${message.author.id}> | ${message.author.id}\n**\`Canal:\`** <#${message.channel.id}> | ${message.channel.id}`
         )
         .setImage(
           message.attachments.first()
