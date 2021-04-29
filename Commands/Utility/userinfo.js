@@ -47,27 +47,44 @@ module.exports = class NameCommand extends require("../../Class/Command") {
       }
 
       let badges1 = {
-          'BUGHUNTER_LEVEL_1': '<:bug_hunter_badge:767200588231344128>',
-          'BUGHUNTER_LEVEL_2': '<:bughunterlvl2:784154198219685899>',
-          'VERIFIED_DEVELOPER': '<a:botdevolper:773249213109633034>',
-          'EARLY_VERIFIED_DEVELOPER': '<:developer:778943805138665514>',
-          'HOUSE_BRILLIANCE': '<:brilliance_badge:767201442531770378>',
-          'HOUSE_BRAVERY': '<:bravery_badge:767201411791978507>',
-          'HOUSE_BALANCE': '<:balance_badge:767201464585945130>',
-          'VERIFIED_BOT': '<:botverify:773244892708470814>',
-          'DISCORD_PARTNER': '<:partner_badge:767203723277369384>',
-          'HYPESQUAD_EVENTS': '<a:hypesquad_events:787442653717069856>',
-          'DISCORD_EMPLOYEE': '<:staff_badge:767200534603497482>',
-          'EARLY_SUPPORTER': '<:earlysupport:784154535517618266>',
+        BUGHUNTER_LEVEL_1: "<:bug_hunter_badge:767200588231344128>",
+        BUGHUNTER_LEVEL_2: "<:bughunterlvl2:784154198219685899>",
+        VERIFIED_DEVELOPER: "<a:botdevolper:773249213109633034>",
+        EARLY_VERIFIED_DEVELOPER: "<:developer:778943805138665514>",
+        HOUSE_BRILLIANCE: "<:brilliance_badge:767201442531770378>",
+        HOUSE_BRAVERY: "<:bravery_badge:767201411791978507>",
+        HOUSE_BALANCE: "<:balance_badge:767201464585945130>",
+        VERIFIED_BOT: "<:botverify:773244892708470814>",
+        DISCORD_PARTNER: "<:partner_badge:767203723277369384>",
+        HYPESQUAD_EVENTS: "<a:hypesquad_events:787442653717069856>",
+        DISCORD_EMPLOYEE: "<:staff_badge:767200534603497482>",
+        EARLY_SUPPORTER: "<:earlysupport:784154535517618266>",
       };
 
-      let fields;
-      const avatar = user.user.displayAvatarURL({ dynamic: true });
-
-      if (avatar.endsWith(".gif")) {
-        fields = " <:HelperBot_Nitro:834091977783377960>";
+      let nitro;
+      const a = user.user;
+      const aa = a.displayAvatarURL({ dynamic: true });
+      if (aa.endsWith(".gif")) {
+        nitro = `${
+          user.user.flags > 0
+            ? user.user.flags
+                .toArray()
+                .map((badge) => badges1[badge])
+                .join(" ")
+            : ""
+        } <:HelperBot_Nitro:834091977783377960>`;
       } else {
-        fields = " ";
+        nitro = `${
+          user.user.flags > 0
+            ? user.user.flags
+                .toArray()
+                .filter(
+                  (x) => !["VERIFIED_DEVELOPER", "DISCORD_PARTNER"].includes(x)
+                )
+                .map((badge) => badges1[badge])
+                .join(" ")
+            : "No tiene Insignias"
+        }`;
       }
       function Markdown(str) {
         return `\`\`\`\n${str}\n\`\`\``;
@@ -100,19 +117,8 @@ module.exports = class NameCommand extends require("../../Class/Command") {
         .addField(`**Información del usuario:**`, [
           `**\`Tag:\`** ${user.user.tag} | ${user.user.id}`,
           `**\`Status:\`** ${status}`,
-          `**\`Insignias:\`** ${fields || ""}${
+          `**\`Insignias:\`** ${nitro} ${
             user.premiumSince ? "<:HelperBot_Booster:834092361180774460>" : ""
-          }${
-            user.user.flags > 0
-              ? user.user.flags
-                  .toArray()
-                  .filter(
-                    (x) =>
-                      !["VERIFIED_DEVELOPER", "DISCORD_PARTNER"].includes(x)
-                  )
-                  .map((badge) => badges1[badge])
-                  .join(" ")
-              : ""
           }`,
           `**\`Creación de la cuenta:\`** ${user.user.createdAt
             .toUTCString()

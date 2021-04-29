@@ -37,6 +37,14 @@ module.exports = class EmojiInfoCommand extends require("../../Class/Command") {
           `${client.emotes.error} | **Debes ingresar un emoji válido, debe ser de este servidor!**`
         );
       let emoji = message.guild.emojis.cache.get(match[1]);
+      if (!emoji)
+        return message.reply(
+          `${client.emotes.error} | **Debes ingresar un emoji válido, debe ser de este servidor!**`
+        );
+      let checkOrCross = (bool) =>
+        bool
+          ? "<:HelperBot_Success:836408773877956669>"
+          : "<:HelperBot_Cross:836408158120837180>";
       const embedEmojiInfo = new Discord.MessageEmbed()
         .setColor(client.colores.pinkColor)
         .setTitle("__**Información del emoji**__")
@@ -55,8 +63,18 @@ module.exports = class EmojiInfoCommand extends require("../../Class/Command") {
             .toLocaleString("en-US", {
               timeZone: "America/Merida",
             })
-            .substr(0, 9)} (${checkDays(emoji.createdAt)})`,
+            .substr(0, 8)} (${checkDays(emoji.createdAt)})`,
           `**\`URL:\`** [Click aquí](${emoji.url})`,
+        ])
+        .addField("**Otra Información:**", [
+          `**\`Usable por:\`** ${
+            emoji.roles.cache.map((role) => "<@&" + role.id + ">").join(", ") ||
+            "Todos"
+          }`,
+          `**\`Eliminado:\`** ${checkOrCross(emoji.deleted)}`,
+          `**\`Disponible:\`** ${checkOrCross(emoji.available)}`,
+          `**\`Requiere Colones:\`** ${checkOrCross(emoji.requiresColons)}`,
+          `**\`Administrado por el sistema:\`** ${checkOrCross(emoji.managed)}`,
         ])
         .setAuthor(
           message.author.tag,
