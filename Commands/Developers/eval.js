@@ -21,10 +21,7 @@ module.exports = class EvalCommand extends require("../../Class/Command") {
   }
   async run(message, args) {
     const client = this.client;
-    if (
-      !["723158623404032022", "493063208576483329"].includes(message.author.id)
-    )
-      return;
+    if (!client.devs.includes(message.author.id)) return;
     if (!args[0])
       return message.channel.send(
         `${client.emotes.error} | **Debes ingresar algo para evaluar!**`
@@ -33,15 +30,22 @@ module.exports = class EvalCommand extends require("../../Class/Command") {
       let output = await eval(args.join(" "));
       let type = typeof output;
       if (typeof output !== "string")
-        output = Util.inspect(output, { depth: 1 });
-
-      if (output.length >= 2000) output = `${output.substr(0, 1900)}...`;
+        output = Util.inspect(output, { depth: 0 });
 
       let msg = await message.reply(
         `(${
           type.substring(0, 1).toUpperCase() + type.substring(1)
-        }) ${output.replace(client.token, "Contenido Privado")}`,
-        { code: "js" }
+        }) ${replace(output, [
+          client.token,
+          process.env.MONGO,
+          process.env.YOUTUBE_COOKIE,
+          process.env.KEY,
+          process.env.DISCORD_TOKEN,
+        ])}`,
+        {
+          code: "js",
+          split: { char: "", maxLength: 1990 },
+        }
       );
       msg.react("836408158120837180");
       msg.awaitReactions((reaction, user) => {
@@ -56,3 +60,13 @@ module.exports = class EvalCommand extends require("../../Class/Command") {
     }
   }
 };
+
+function replace(string, array) {
+  let res = string;
+
+  for (let i of array) {
+    res = res.split(i).join("Contenido Privado");
+  }
+
+  return res;
+}
