@@ -1,7 +1,9 @@
 const Discord = require("discord.js");
 const humanizeDuration = require("humanize-duration");
 
-module.exports = class ChannelInfoCommand extends require("../../Class/Command") {
+module.exports = class ChannelInfoCommand extends (
+  require("../../Class/Command")
+) {
   constructor(client) {
     super(client, {
       name: "channelinfo",
@@ -31,10 +33,13 @@ module.exports = class ChannelInfoCommand extends require("../../Class/Command")
         store: "Tienda",
         unknown: "Canal desconocido",
       };
-      const channel = message.mentions.channels.first() || message.channel;
+      const channel =
+        message.mentions.channels.first() ||
+        message.guild.channels.cache.get(args[0]) ||
+        message.channel;
       if (!message.guild.channels.cache.has(channel.id))
         return message.reply(
-          `${client.emotes.error} | **Menciona únicamente a canales del servidor!**`
+          `${client.emotes.error} | **Menciona únicamente a canales del servidor.**`
         );
       const infoEmbed = new Discord.MessageEmbed()
         .setTitle("__**Información del canal**__")
@@ -50,9 +55,12 @@ module.exports = class ChannelInfoCommand extends require("../../Class/Command")
         ])
         .addField("**Otra Información:**", [
           `**\`Número Posición:\`** ${channel.rawPosition}`,
-          `**\`Cooldown:\`** ${humanizeDuration(channel.rateLimitPerUser + "000", {
-            language: "es",
-          })}`,
+          `**\`Cooldown:\`** ${humanizeDuration(
+            channel.rateLimitPerUser + "000",
+            {
+              language: "es",
+            }
+          )}`,
           `**\`Creación:\`** ${channel.createdAt
             .toLocaleString("en-US", {
               timeZone: "America/Merida",

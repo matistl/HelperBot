@@ -27,7 +27,7 @@ module.exports = class EnabledCommand extends require("../../Class/Command") {
       if (!message.member.permissions.has(8)) {
         const embed = new Discord.MessageEmbed()
           .setDescription(
-            `${client.emotes.error} | **No tienes el permiso necesario!**\n${client.emotes.warning} | **Permiso requerido:** \`ADMINISTRATOR\``
+            `${client.emotes.error} | **No tienes el permiso necesario.**\n${client.emotes.warning} | **Permiso requerido:** \`ADMINISTRATOR\`**.**`
           )
           .setImage("https://i.imgur.com/mcqbxZJ.gif")
           .setColor(client.colores.redColor);
@@ -35,23 +35,23 @@ module.exports = class EnabledCommand extends require("../../Class/Command") {
       }
       if (!commandName)
         return message.channel.send(
-          `${client.emotes.error} | **Debes ingresar el nombre del comando el cual quieres habilitar o deshabilitar!**`
+          `${client.emotes.error} | **Debes ingresar el nombre del comando el cual quieres habilitar o deshabilitar.**`
         );
       if (!client.commands.has(commandName))
         return message.channel.send(
-          `${client.emotes.error} | **Debes ingresar un comando válido!**`
+          `${client.emotes.error} | **Debes ingresar un comando válido.**`
         );
       if (!commandStatus)
         return message.channel.send(
           `${
             client.emotes.error
-          } | **Debes ingresar un estado válido!**\nUsa: \`${await client.getPrefix(
+          } | **Debes ingresar un estado válido.**\nUsa: \`${await client.getPrefix(
             message
           )}help ${this.information.name}\``
         );
       if (commandName === this.information.name)
         return message.channel.send(
-          `${client.emotes.error} | **No puedes deshabilitar ese comando!**`
+          `${client.emotes.error} | **No puedes deshabilitar ese comando.**`
         );
       switch (commandStatus) {
         case "true":
@@ -61,7 +61,7 @@ module.exports = class EnabledCommand extends require("../../Class/Command") {
               if (err) throw err;
               if (!data) {
                 message.channel.send(
-                  `${client.emotes.error} | **Ese comando no esta deshabilitado!**`
+                  `${client.emotes.error} | **Ese comando no esta deshabilitado.**`
                 );
               } else {
                 await commandSetup.findOneAndDelete({
@@ -69,7 +69,7 @@ module.exports = class EnabledCommand extends require("../../Class/Command") {
                   commandName: commandName,
                 });
                 message.channel.send(
-                  `${client.emotes.success} | **El comando fue hablitado correctamente!**`
+                  `${client.emotes.success} | **El comando fue hablitado correctamente.**`
                 );
               }
             }
@@ -82,7 +82,7 @@ module.exports = class EnabledCommand extends require("../../Class/Command") {
               if (err) throw err;
               if (data) {
                 message.channel.send(
-                  `${client.emotes.error} | **Ese comando ya esta deshabilitado!**`
+                  `${client.emotes.error} | **Ese comando ya esta deshabilitado.**`
                 );
               } else {
                 let xdddd = new commandSetup({
@@ -92,7 +92,7 @@ module.exports = class EnabledCommand extends require("../../Class/Command") {
                 });
                 xdddd.save();
                 message.channel.send(
-                  `${client.emotes.success} | **El comando fue deshablitado correctamente!**`
+                  `${client.emotes.success} | **El comando fue deshablitado correctamente.**`
                 );
               }
             }
@@ -102,7 +102,7 @@ module.exports = class EnabledCommand extends require("../../Class/Command") {
           message.channel.send(
             `${
               client.emotes.error
-            } | **Debes ingresar un estado válido!**\nUsa: \`${await client.getPrefix(
+            } | **Debes ingresar un estado válido.**\nUsa: \`${await client.getPrefix(
               message
             )}help ${this.information.name}\``
           );

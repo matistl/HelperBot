@@ -1,9 +1,11 @@
 const Helper = require("./Class/Client.js");
+const { MessageEmbed } = require("discord.js");
 const prefixSchema = require("./Util/Models/prefix.js");
+const modLogs = require("./Util/Models/logs.js");
 
 const client = new Helper({
   ws: {
-    intents: 16127,
+    intents: 32511,
   },
   allowedMentions: {
     parse: [],
@@ -11,7 +13,7 @@ const client = new Helper({
   partials: ["MESSAGE", "REACTION", "CHANNEL", "GUILD_MEMBER", "USER"],
   fetchAllMembers: true,
 });
-
+client.devs = ["507367752391196682", "723158623404032022"];
 const DisTube = require("distube");
 const Read = require("util").promisify(require("fs").readdir);
 const mongoose = require("mongoose");
@@ -35,6 +37,67 @@ const inicio = async () => {
       }
       return custom;
     };
+
+    client.modlogs = async function (
+      { Member, Action, Reason, Color },
+      message
+    ) {
+      const embedModLogs = new MessageEmbed()
+        .setAuthor(
+          `${message.author.tag} (${message.author.id})`,
+          message.author.displayAvatarURL({ dynamic: true })
+        )
+        .setDescription([
+          `**\`Miembro:\`** ${Member.user.tag} \`(${Member.id})\``,
+          `**\`Acción:\`** ${Action}`,
+          `**\`Razón:\`** ${Reason || "No hay razón."}`,
+        ])
+        .setFooter(
+          `${new Date().toLocaleString("en-US", {
+            timeZone: "America/Merida",
+          })}`
+        )
+        .setThumbnail(Member.user.displayAvatarURL({ dynamic: true }))
+        .setColor(Color);
+      await Member.send(embedModLogs).catch(() => {});
+      const data = await modLogs.findOne({ guildID: message.guild.id });
+      if (!data) return;
+      const channel = await message.guild.channels.cache.get(data.channelID);
+      await channel.send(embedModLogs).catch(() => {});
+    };
+
+    client.answers = [
+      "Sí",
+      "No",
+      "Tal vez",
+      "Posiblemente",
+      "Excelente",
+      "Claramente que sí",
+      "Claramente que no",
+      "Definitivamente no",
+      "Definitivamente sí",
+      "Lamentable",
+      "...",
+      "¿Te sientes bien?",
+      "Seguramente",
+      "Yo te apoyo",
+      "Yo no te apoyo",
+      "Consigue novia",
+      "Consigue novio",
+      "Lo detesto",
+      "Por supuesto",
+      "Horrible",
+      "Hermoso",
+      "Hermosa",
+      "Sin palabras",
+      "Hoy",
+      "Mañana",
+      "Nunca",
+      "Siempre",
+      "Jamás",
+      "Increíble",
+    ];
+
     //Lista
     const Commands = await Read("./Commands");
     const Events = await Read("./Events/Discord");
@@ -95,7 +158,6 @@ const inicio = async () => {
       leaveOnEmpty: true,
       youtubeDL: true,
       youtubeCookie: process.env.YOUTUBE_COOKIE,
-      youtubeIdentityToken: process.env.KEY,
       customFilters: {
         cursed: "vibrato=f=6.5,tremolo,aresample=48000,asetrate=48000*1.25",
         "8d": "apulsator=hz=0.075",

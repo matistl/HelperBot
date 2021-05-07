@@ -23,7 +23,7 @@ module.exports = class ResumeCommand extends require("../../Class/Command") {
 
       if (!message.member.voice.channel)
         return message.reply(
-          `${client.emotes.error} | **Debes estar en un canal de voz para usar este comando!**`
+          `${client.emotes.error} | **Debes estar en un canal de voz para usar este comando.**`
         );
 
       if (
@@ -31,17 +31,17 @@ module.exports = class ResumeCommand extends require("../../Class/Command") {
         message.member.voice.channel.id !== message.guild.me.voice.channel.id
       )
         return message.reply(
-          `${client.emotes.error} | **No estas en el mismo canal que yo!**`
+          `${client.emotes.error} | **No estas en el mismo canal que yo.**`
         );
 
       if (!serverQueue)
         return message.reply(
-          `${client.emotes.error} | **No hay canciones en la lista!**`
+          `${client.emotes.error} | **No hay canciones en la lista.**`
         );
 
       await client.distube.resume(message);
       message.reply(
-        `${client.emotes.success} | **La canción fue despausada!**`
+        `${client.emotes.success} | **La canción fue despausada.**`
       );
     } catch (e) {
       client.error({

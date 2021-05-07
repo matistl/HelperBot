@@ -30,22 +30,6 @@ module.exports = class NameCommand extends require("../../Class/Command") {
           message.member
         : message.member;
 
-      let status;
-      switch (user.presence.status) {
-        case "online":
-          status = "🟢 Online";
-          break;
-        case "dnd":
-          status = "⛔ No molestar";
-          break;
-        case "idle":
-          status = "🌙 Ausente";
-          break;
-        case "offline":
-          status = "⚪ Offline";
-          break;
-      }
-
       let badges1 = {
         BUGHUNTER_LEVEL_1: "<:bug_hunter_badge:767200588231344128>",
         BUGHUNTER_LEVEL_2: "<:bughunterlvl2:784154198219685899>",
@@ -60,34 +44,8 @@ module.exports = class NameCommand extends require("../../Class/Command") {
         DISCORD_EMPLOYEE: "<:staff_badge:767200534603497482>",
         EARLY_SUPPORTER: "<:earlysupport:784154535517618266>",
       };
-
-      let nitro;
-      const a = user.user;
-      const aa = a.displayAvatarURL({ dynamic: true });
-      if (aa.endsWith(".gif")) {
-        nitro = `${
-          user.user.flags > 0
-            ? user.user.flags
-                .toArray()
-                .map((badge) => badges1[badge])
-                .join(" ")
-            : ""
-        } <:HelperBot_Nitro:834091977783377960>`;
-      } else {
-        nitro = `${
-          user.user.flags > 0
-            ? user.user.flags
-                .toArray()
-                .filter(
-                  (x) => !["VERIFIED_DEVELOPER", "DISCORD_PARTNER"].includes(x)
-                )
-                .map((badge) => badges1[badge])
-                .join(" ")
-            : "No tiene Insignias"
-        }`;
-      }
       function Markdown(str) {
-        return `\`\`\`\n${str}\n\`\`\``;
+        return `\`\`\`ml\n${str}\n\`\`\``;
       }
 
       function checkDays(date) {
@@ -115,11 +73,9 @@ module.exports = class NameCommand extends require("../../Class/Command") {
         )
         .setThumbnail(user.user.displayAvatarURL({ dynamic: true }))
         .addField(`**Información del usuario:**`, [
-          `**\`Tag:\`** ${user.user.tag} | ${user.user.id}`,
-          `**\`Status:\`** ${status}`,
-          `**\`Insignias:\`** ${nitro} ${
-            user.premiumSince ? "<:HelperBot_Booster:834092361180774460>" : ""
-          }`,
+          `**\`Tag:\`** ${user.user.tag}`,
+          `**\`ID:\`**  ${user.user.id}`,
+          `**\`Mención:\`** <@!${user.user.id}>`,
           `**\`Creación de la cuenta:\`** ${user.user.createdAt
             .toUTCString()
             .substr(0, 16)} (${checkDays(user.user.createdAt)})`,

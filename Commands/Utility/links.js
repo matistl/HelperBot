@@ -32,7 +32,7 @@ module.exports = class LinksCommand extends require("../../Class/Command") {
         .send(embed)
         .then(() => {
           message.reply(
-            `${client.emotes.invite} | **Revisa tus mensajes directos!**`
+            `${client.emotes.invite} | **Revisa tus mensajes directos.**`
           );
         })
         .catch((e) => {

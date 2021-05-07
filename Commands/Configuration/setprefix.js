@@ -1,4 +1,5 @@
 const prefixSchema = require(`../../Util/Models/prefix.js`);
+const Discord = require("discord.js");
 
 module.exports = class SetPrefixCommand extends require("../../Class/Command") {
   constructor(client) {
@@ -25,7 +26,7 @@ module.exports = class SetPrefixCommand extends require("../../Class/Command") {
       if (!message.member.permissions.has(8)) {
         const embed = new Discord.MessageEmbed()
           .setDescription(
-            `${client.emotes.error} | **No tienes el permiso necesario!**\n${client.emotes.warning} | **Permiso requerido:** \`ADMINISTRATOR\``
+            `${client.emotes.error} | **No tienes el permiso necesario.**\n${client.emotes.warning} | **Permiso requerido:** \`ADMINISTRATOR\`**.**`
           )
           .setImage("https://i.imgur.com/mcqbxZJ.gif")
           .setColor(client.colores.redColor);
@@ -33,11 +34,11 @@ module.exports = class SetPrefixCommand extends require("../../Class/Command") {
       }
       if (!res)
         return message.channel.send(
-          `${client.emotes.error} | **Debes ingresar el nuevo prefix!**`
+          `${client.emotes.error} | **Debes ingresar el nuevo prefix.**`
         );
       if (res.length > 3)
         return message.channel.send(
-          `${client.emotes.error} | **El nuevo prefix no puede superar los 3 caracteres!**`
+          `${client.emotes.error} | **El nuevo prefix no puede superar los 3 caracteres.**`
         );
       let findOnePrefix = await prefixSchema.findOne({
         Guild: message.guild.id,

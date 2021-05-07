@@ -29,14 +29,22 @@ module.exports = class AvatarCommand extends require("../../Class/Command") {
           message.guild.members.cache.get(args[0]) ||
           message.member
         : message.member;
+      const av = await user.user.displayAvatarURL({
+        dynamic: true,
+        size: 2048,
+      });
+      if (av === null)
+        return message.reply(
+          `${client.emotes.error} | **Esta persona no tiene avatar.**`
+        );
       const embedAvatar = new Discord.MessageEmbed()
-        .setTitle(`**Avatar de:** \`${user.user.tag}\``)
-        .setDescription(
+        .setDescription([
+          `**Avatar de:** \`${user.user.tag}\``,
           `[URL del Avatar](${user.user.displayAvatarURL({
             dynamic: true,
             size: 2048,
-          })})`
-        )
+          })})`,
+        ])
         .setColor(client.colores.magentaColor)
         .setImage(user.user.displayAvatarURL({ dynamic: true, size: 2048 }))
         .setAuthor(

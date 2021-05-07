@@ -24,6 +24,12 @@ module.exports = class MessageUpdate {
       } else {
         img = "No hay imagen";
       }
+      let ID;
+      if(oldMessage.attachments.first()){
+          ID = "| "+oldMessage.attachments.first().id
+      } else {
+          ID = "";
+      }
       const embedMessageUpdate = new Discord.MessageEmbed()
         .setColor(oldMessage.member.displayHexColor || client.colores.redColor)
         .addField(
@@ -42,7 +48,7 @@ module.exports = class MessageUpdate {
         )
         .addField(
           "**Información:**",
-          `**\`Autor del mensaje:\`** ${oldMessage.author} | ${oldMessage.author.id}\n**\`Canal:\`**<#${newMessage.channel.id}> | ${newMessage.channel.id}\n**\`URL del mensaje:\`** [Click aquí](${newMessage.url})\n**\`URL de la imagen:\`** ${img}`
+          `**\`Autor del mensaje:\`** ${oldMessage.author} | ${oldMessage.author.id}\n**\`Canal:\`**<#${newMessage.channel.id}> | ${newMessage.channel.id}\n**\`URL del mensaje:\`** [Click aquí](${newMessage.url}) | ${newMessage.id}\n**\`URL de la imagen:\`** ${img} ${ID}`
         )
         .setImage(
           oldMessage.attachments.first()

@@ -32,25 +32,25 @@ module.exports = class BlacklistCommand extends require("../../Class/Command") {
         return;
 
       if (!user)
-        return message.channel.send(
-          `${client.emotes.error} | **Debes mencionar o darme la ID de un usuario!**`
+        return message.reply(
+          `${client.emotes.error} | **Debes mencionar o darme la ID de un usuario.**`
         );
 
       if (user.id === "723158623404032022")
-        return message.channel.send(
-          `${client.emotes.error} | **No puedo añadir a la blacklist a mi developer!**`
+        return message.reply(
+          `${client.emotes.error} | **No puedo añadir a la blacklist a mi developer.**`
         );
       if (user.id === "493063208576483329")
-        return message.channel.send(
-          `${client.emotes.error} | **No puedo añadir a la blacklist a mi developer!**`
+        return message.reply(
+          `${client.emotes.error} | **No puedo añadir a la blacklist a mi developer.**`
         );
       switch (args[0]) {
         case "add":
           await blacklistModel.findOne({ ID: user.id }, async (err, data) => {
             if (err) throw err;
             if (data) {
-              return message.channel.send(
-                `${client.emotes.error} | **Ese usuario ya está en la blacklist!**`
+              return message.reply(
+                `${client.emotes.error} | **Ese usuario ya está en la blacklist.**`
               );
             } else {
               data = new blacklistModel({
@@ -61,8 +61,8 @@ module.exports = class BlacklistCommand extends require("../../Class/Command") {
               });
             }
             data.save();
-            message.channel.send(
-              `${client.emotes.success} | **El usuario:** \`${user.tag}\` **fue añadido correctamente de la blacklist!**`
+            message.reply(
+              `${client.emotes.success} | **El usuario:** \`${user.tag}\` **fue añadido correctamente de la blacklist.**`
             );
           });
           break;
@@ -71,12 +71,12 @@ module.exports = class BlacklistCommand extends require("../../Class/Command") {
             if (err) throw err;
             if (data) {
               await blacklistModel.findOneAndDelete({ ID: user.id });
-              return message.channel.send(
-                `${client.emotes.success} | **El usuario:** \`${user.tag}\` **fue removido correctamente de la blacklist!**`
+              return message.reply(
+                `${client.emotes.success} | **El usuario:** \`${user.tag}\` **fue removido correctamente de la blacklist.**`
               );
             } else {
-              return message.channel.send(
-                `${client.emotes.error} | **Ese usuario no está en la blacklist!**`
+              return message.reply(
+                `${client.emotes.error} | **Ese usuario no está en la blacklist.**`
               );
             }
           });
@@ -85,8 +85,8 @@ module.exports = class BlacklistCommand extends require("../../Class/Command") {
           await blacklistModel.findOne({ ID: user.id }, async (err, data) => {
             if (err) throw err;
             if (!data) {
-              return message.channel.send(
-                `${client.emotes.error} | **Ese usuario no está en la blacklist!**`
+              return message.reply(
+                `${client.emotes.error} | **Ese usuario no está en la blacklist.**`
               );
             } else {
               const embed = new client.discord.MessageEmbed()
@@ -105,12 +105,12 @@ module.exports = class BlacklistCommand extends require("../../Class/Command") {
                     .displayAvatarURL({ dynamic: true })
                 )
                 .setColor(client.colores.fuchsiaColor);
-              message.channel.send(embed);
+              message.reply(embed);
             }
           });
           break;
         default:
-          message.channel.send(
+          message.reply(
             `${client.emotes.error} | **Debes ingresar que quireres hacer:** \`<add | rm | info>\``
           );
           break;

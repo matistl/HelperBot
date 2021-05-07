@@ -25,7 +25,7 @@ module.exports = class SkipCommand extends require("../../Class/Command") {
 
       if (!message.member.voice.channel)
         return message.reply(
-          `${client.emotes.error} | **Debes estar en un canal de voz para usar este comando!**`
+          `${client.emotes.error} | **Debes estar en un canal de voz para usar este comando.**`
         );
 
       if (
@@ -33,19 +33,19 @@ module.exports = class SkipCommand extends require("../../Class/Command") {
         message.member.voice.channel.id !== message.guild.me.voice.channel.id
       )
         return message.reply(
-          `${client.emotes.error} | **No estas en el mismo canal que yo!**`
+          `${client.emotes.error} | **No estas en el mismo canal que yo.**`
         );
 
       if (!serverQueue)
         return message.reply(
-          `${client.emotes.error} | **No hay canciones en la lista!**`
+          `${client.emotes.error} | **No hay canciones en la lista.**`
         );
 
       if (
         message.member.voice.channel.members.filter((x) => !x.user.bot).size ===
         1
       ) {
-        message.reply(`${client.emotes.success} | **La canción fue saltada!**`);
+        message.reply(`${client.emotes.success} | **La canción fue saltada.**`);
         await client.distube.skip(message);
         return;
       }
@@ -55,7 +55,7 @@ module.exports = class SkipCommand extends require("../../Class/Command") {
 
       if (mapload) {
         const embed = new Discord.MessageEmbed()
-          .setDescription(`\`${message.author.username}\` **ya has votado!**`)
+          .setDescription(`\`${message.author.username}\` **ya has votado.**`)
           .setColor(client.colores.redColor);
         if (mapload.users.includes(message.author.id))
           return message.channel.send(embed);
@@ -70,7 +70,7 @@ module.exports = class SkipCommand extends require("../../Class/Command") {
             );
           const embedXD = new Discord.MessageEmbed()
             .setDescription(
-              `\`${message.author.username}\` **ha votado para saltar la canción!** \`(${mapload.users.length}/${skipNumber})\``
+              `\`${message.author.username}\` **ha votado para saltar la canción.** \`(${mapload.users.length}/${skipNumber})\``
             )
             .setColor(client.color);
           message.channel.send(embedXD);
@@ -84,7 +84,7 @@ module.exports = class SkipCommand extends require("../../Class/Command") {
         if (mapload.users.length < number) return;
         const embedUwU = new Discord.MessageEmbed()
           .setDescription(
-            `${client.emotes.success} | **La canción actual fue saltada!**`
+            `${client.emotes.success} | **La canción actual fue saltada.**`
           )
           .setColor(client.colores.magentaColor);
         message.channel.send(embedUwU);
@@ -106,7 +106,7 @@ module.exports = class SkipCommand extends require("../../Class/Command") {
           .setDescription(
             `\`${
               message.author.username
-            }\` **ha iniciado una votación para saltar la canción!** \`(1/${
+            }\` **ha iniciado una votación para saltar la canción.** \`(1/${
               skipNumber + 1
             })\``
           )

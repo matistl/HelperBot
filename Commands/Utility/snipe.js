@@ -25,7 +25,7 @@ module.exports = class SnipeCommand extends require("../../Class/Command") {
       const msg = snipes[args[0] - 1 || 0];
       if (!msg)
         return message.reply(
-          `${client.emotes.error} | **No encuentro ningún mensaje elimiado!**`
+          `${client.emotes.error} | **No encuentro ningún mensaje eliminado.**`
         );
       const embedSnipe = new MessageEmbed()
         .setAuthor(

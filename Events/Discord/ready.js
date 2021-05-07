@@ -7,7 +7,7 @@ module.exports = class Ready {
     try {
       console.log(`✔️ | ${client.user.tag} esta listo!`);
       client.user.setPresence({
-        activity: { name: "invite me ✨ | h!help" },
+        activity: { name: "invítame ✨ | h!help" },
         status: "idle",
       });
     } catch (e) {

@@ -23,14 +23,16 @@ module.exports = class EvalCommand extends require("../../Class/Command") {
     const client = this.client;
     if (!client.devs.includes(message.author.id)) return;
     if (!args[0])
-      return message.channel.send(
-        `${client.emotes.error} | **Debes ingresar algo para evaluar!**`
+      return message.reply(
+        `${client.emotes.error} | **Debes ingresar algo para evaluar.**`
       );
     try {
       let output = await eval(args.join(" "));
       let type = typeof output;
       if (typeof output !== "string")
         output = Util.inspect(output, { depth: 0 });
+
+      // if (output.length >= 2000) output = `${output.substr(0, 1990)}...`;
 
       let msg = await message.reply(
         `(${
@@ -41,17 +43,20 @@ module.exports = class EvalCommand extends require("../../Class/Command") {
           process.env.YOUTUBE_COOKIE,
           process.env.KEY,
           process.env.DISCORD_TOKEN,
+          process.env.ALEX_FLIP_TOKEN,
         ])}`,
         {
           code: "js",
-          split: { char: "", maxLength: 1990 },
+          split: { char: "", maxLength: 1999 },
         }
       );
-      msg.react("836408158120837180");
-      msg.awaitReactions((reaction, user) => {
-        if (user.id != message.author.id) return;
-        if (reaction.emoji.id == "836408158120837180") return msg.delete();
-      });
+      for (let i of msg) {
+        i.react("836408158120837180");
+        i.awaitReactions((reaction, user) => {
+          if (user.id != message.author.id) return;
+          if (reaction.emoji.id == "836408158120837180") return i.delete();
+        });
+      }
     } catch (e) {
       message.reply(`${e.name}: ${e.message}`, {
         code: "js",

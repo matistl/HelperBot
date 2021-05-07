@@ -30,7 +30,7 @@ module.exports = class ServericonCommand extends (
             dynamic: true,
           })})`
         )
-        .setImage(message.guild.iconURL({ dynamic: true }))
+        .setImage(message.guild.iconURL({ size: 2048, dynamic: true }))
         .setColor(client.colores.yellowColor)
         .setAuthor(
           message.author.tag,

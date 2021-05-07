@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const fetch = require("node-fetch");
 
-module.exports = class NameCommand extends require("../../Class/Command") {
+module.exports = class DJSCommand extends require("../../Class/Command") {
   constructor(client) {
     super(client, {
       name: "djs",
@@ -24,7 +24,7 @@ module.exports = class NameCommand extends require("../../Class/Command") {
     try {
       if (!args[0])
         return message.reply(
-          `${client.emotes.error} | **Debes ingresar algo para buscar!**`
+          `${client.emotes.error} | **Debes ingresar algo para buscar.**`
         );
       fetch(
         `https://djsdocs.sorta.moe/v2/embed?src=stable&q=${encodeURIComponent(
@@ -35,6 +35,11 @@ module.exports = class NameCommand extends require("../../Class/Command") {
         .then((data) => {
           const embed = new Discord.MessageEmbed(data).setColor(client.color);
           message.reply(embed);
+        })
+        .catch((err) => {
+          message.reply(
+            `${client.emotes.error} | **Ocurrió un problema al momento de la busqueda.**`
+          );
         });
     } catch (e) {
       client.error({
