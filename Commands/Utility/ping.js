@@ -1,9 +1,12 @@
+const mongoose = require("mongoose");
+
 module.exports = class PingCommand extends require("../../Class/Command") {
   constructor(client) {
     super(client, {
       name: "ping",
       aliases: ["pong"],
-      description: "Proporciona el ping del bot, de discord y de la base de datos",
+      description:
+        "Proporciona el ping del bot, de discord y de la base de datos",
       usage: "ping",
       dirname: __dirname,
       date: "Miércoles, ‎21‎ de ‎abril‎ de ‎2021",
@@ -18,9 +21,9 @@ module.exports = class PingCommand extends require("../../Class/Command") {
     const client = this.client;
     try {
       let date = Date.now();
-      let ping_db = await new Promise((r, j) => {
-        require("mongoose")
-          .connection.db.admin()
+      let pingDataBase = await new Promise((r, j) => {
+        mongoose.connection.db
+          .admin()
           .ping((err, result) =>
             err || !result ? j(err || result) : r(Date.now() - date)
           );
@@ -28,8 +31,10 @@ module.exports = class PingCommand extends require("../../Class/Command") {
       const embedPing = new client.discord.MessageEmbed()
         .setDescription([
           `:ping_pong: | **Bot Ping:** ${client.ws.ping}ms`,
-          `:satellite: | **Discord API Ping:** ${Date.now() - message.createdTimestamp}ms`,
-          `:card_box: | **DataBase Ping:** ${await ping_db}ms`,
+          `:satellite: | **Discord API Ping:** ${
+            Date.now() - message.createdTimestamp
+          }ms`,
+          `:card_box: | **DataBase Ping:** ${await pingDataBase}ms`,
         ])
         .setColor(client.colores.fuchsiaColor);
       message.channel.send(embedPing);
