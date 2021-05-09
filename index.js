@@ -1,6 +1,6 @@
 const Helper = require("./Class/Client.js");
 const { MessageEmbed } = require("discord.js");
-const prefixSchema = require("./Util/Models/prefix.js");
+// const prefixSchema = require("./Util/Models/prefix.js");
 const modLogs = require("./Util/Models/logs.js");
 
 const client = new Helper({
@@ -14,6 +14,37 @@ const client = new Helper({
   fetchAllMembers: true,
 });
 client.devs = ["507367752391196682", "723158623404032022"];
+client.answers = [
+  "Sí",
+  "No",
+  "Tal vez",
+  "Posiblemente",
+  "Excelente",
+  "Claramente que sí",
+  "Claramente que no",
+  "Definitivamente no",
+  "Definitivamente sí",
+  "Lamentable",
+  "...",
+  "¿Te sientes bien?",
+  "Seguramente",
+  "Yo te apoyo",
+  "Yo no te apoyo",
+  "Consigue novia",
+  "Consigue novio",
+  "Lo detesto",
+  "Por supuesto",
+  "Horrible",
+  "Hermoso",
+  "Hermosa",
+  "Sin palabras",
+  "Hoy",
+  "Mañana",
+  "Nunca",
+  "Siempre",
+  "Jamás",
+  "Increíble",
+];
 const DisTube = require("distube");
 const Read = require("util").promisify(require("fs").readdir);
 const mongoose = require("mongoose");
@@ -21,83 +52,6 @@ const { config } = require("dotenv");
 config();
 const inicio = async () => {
   try {
-    //Funciones
-    client.getPrefix = async function (message) {
-      if (!message.guild) return;
-      let custom;
-
-      const Data = await prefixSchema
-        .findOne({ Guild: message.guild.id })
-        .catch((err) => console.log(err));
-
-      if (Data) {
-        custom = Data.Prefix;
-      } else {
-        custom = "h!";
-      }
-      return custom;
-    };
-
-    client.modlogs = async function (
-      { Member, Action, Reason, Color },
-      message
-    ) {
-      const embedModLogs = new MessageEmbed()
-        .setAuthor(
-          `${message.author.tag} (${message.author.id})`,
-          message.author.displayAvatarURL({ dynamic: true })
-        )
-        .setDescription([
-          `**\`Miembro:\`** ${Member.user.tag} \`(${Member.id})\``,
-          `**\`Acción:\`** ${Action}`,
-          `**\`Razón:\`** ${Reason || "No hay razón."}`,
-        ])
-        .setFooter(
-          `${new Date().toLocaleString("en-US", {
-            timeZone: "America/Merida",
-          })}`
-        )
-        .setThumbnail(Member.user.displayAvatarURL({ dynamic: true }))
-        .setColor(Color);
-      await Member.send(embedModLogs).catch(() => {});
-      const data = await modLogs.findOne({ guildID: message.guild.id });
-      if (!data) return;
-      const channel = await message.guild.channels.cache.get(data.channelID);
-      await channel.send(embedModLogs).catch(() => {});
-    };
-
-    client.answers = [
-      "Sí",
-      "No",
-      "Tal vez",
-      "Posiblemente",
-      "Excelente",
-      "Claramente que sí",
-      "Claramente que no",
-      "Definitivamente no",
-      "Definitivamente sí",
-      "Lamentable",
-      "...",
-      "¿Te sientes bien?",
-      "Seguramente",
-      "Yo te apoyo",
-      "Yo no te apoyo",
-      "Consigue novia",
-      "Consigue novio",
-      "Lo detesto",
-      "Por supuesto",
-      "Horrible",
-      "Hermoso",
-      "Hermosa",
-      "Sin palabras",
-      "Hoy",
-      "Mañana",
-      "Nunca",
-      "Siempre",
-      "Jamás",
-      "Increíble",
-    ];
-
     //Lista
     const Commands = await Read("./Commands");
     const Events = await Read("./Events/Discord");
@@ -120,15 +74,6 @@ const inicio = async () => {
         new (require(`./Events/Discord/${e[0]}.js`))(client).run(...args)
       );
       console.log(`✔️ | El evento ${e[0]} cargó con éxito!`);
-    });
-
-    //XP
-    const { EasyXPCord } = require("easy-xpcord");
-    client.xpcord = new EasyXPCord({
-      uri: process.env.MONGO,
-    });
-    client.xpcord.connect().then(() => {
-      console.log("✔️ | Conectado a EasyXPCord!");
     });
 
     //Log

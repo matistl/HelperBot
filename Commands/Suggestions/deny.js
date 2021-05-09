@@ -1,0 +1,87 @@
+const Discord = require("discord.js");
+const SuggestionCode = require("../../Util/Models/suggestCode.js");
+const SuggestionChannel = require("../../Util/Models/suggestions.js");
+
+module.exports = class DenyCommand extends require("../../Class/Command") {
+  constructor(client) {
+    super(client, {
+      name: "deny",
+      aliases: [],
+      description: "Acepta una sugerencia",
+      usage: "deny <suggest-code> (reason)",
+      dirname: __dirname,
+      date: "Sábado, 8 de mayo de 2021",
+      botPermissions: null,
+      userPermissions: 8,
+      cooldown: 5,
+      nsfw: false,
+      args: true,
+      dev: false,
+      enable: true,
+    });
+  }
+  async run(message, args) {
+    const client = this.client;
+    try {
+      const code = args[0];
+      const reason = args.slice(1).join(" ") || "No hay razón.";
+      const dataChannel = await SuggestionChannel.findOne({
+        guildID: message.guild.id,
+      });
+      if (!message.member.permissions.has(8)) {
+        const embed = new Discord.MessageEmbed()
+          .setDescription(
+            `${client.emotes.error} | **No tienes el permiso necesario.**\n${client.emotes.warning} | **Permiso requerido:** \`ADMINISTRATOR\`**.**`
+          )
+          .setImage("https://i.imgur.com/mcqbxZJ.gif")
+          .setColor(client.colores.redColor);
+        return message.reply(embed);
+      }
+      if (!dataChannel)
+        return message.reply(
+          `${client.emotes.error} | **No hay un canal de sugerencias establecido en el servidor.**`
+        );
+      if (!code)
+        return message.reply(
+          `${client.emotes.error} | **Debes ingresar el código de una sugerencia.**`
+        );
+      const data = await SuggestionCode.findOne({
+        suggestChannelID: dataChannel.channelID,
+        suggestCode: code,
+      });
+      if (!data) {
+        return message.reply(
+          `${client.emotes.error} | **El código es inválido o la sugerencia ya fue aceptada ó denegada en el servidor.**`
+        );
+      }
+      const suggChannel = message.guild.channels.cache.get(
+        dataChannel.channelID
+      );
+      const suggestedEmbed = await suggChannel.messages.fetch(
+        data.suggestMessageID
+      );
+      if (reason.length >= 1020) reason = `${reason.substr(0, 1000)}...`;
+      const suggestEmbed = suggestedEmbed.embeds[0];
+      suggestEmbed.fields.splice(0, 1);
+      const acceptEmbed = new Discord.MessageEmbed(suggestEmbed)
+        .setColor(client.colores.redColor)
+        .addField("> **Estado:**", "Rechazada")
+        .addField("> **Razón:**", reason)
+        .addField("> **Rechazada por:**", message.author.tag);
+      message.reply(
+        `${client.emotes.success} | **La sugerencia fue rechazada correctamente.**`
+      );
+      await suggestedEmbed.edit(acceptEmbed);
+      await SuggestionCode.deleteOne({
+        suggestCode: code,
+      });
+    } catch (e) {
+      client.error({
+        name: this.information.name,
+        error: e,
+        type: "command",
+        message,
+      });
+    }
+  }
+};

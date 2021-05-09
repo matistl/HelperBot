@@ -51,7 +51,7 @@ module.exports = class HelpCommand extends require("../../Class/Command") {
             message.author.displayAvatarURL({ dynamic: true })
           )
           .setDescription(cmd.information.description || "No hay descripción")
-          .addField("**Información del comando:**", [
+          .addField("> **Información del comando:**", [
             `**\`Nombre del comando:\`** ${cmd.information.name}`,
             `**\`Aliases del comando:\`** ${
               cmd.information.aliases.join(", ") || "No hay aliases"
@@ -63,7 +63,7 @@ module.exports = class HelpCommand extends require("../../Class/Command") {
               cmd.information.date || "No se proporcionó fecha"
             }`,
           ])
-          .addField("**Otra Información:**", [
+          .addField("> **Otra Información:**", [
             `**\`Solo canales NSFW:\`** ${
               cmd.configuration.nsfw ? "Sí" : "No"
             }`,
@@ -75,7 +75,7 @@ module.exports = class HelpCommand extends require("../../Class/Command") {
             }`,
             `**\`Habilitado:\`** ${cmd.configuration.enable ? "Sí" : "No"}`,
           ])
-          .addField("**Permisos necesarios:**", [
+          .addField("> **Permisos necesarios:**", [
             `**\`Usuario:\`** ${pU || "No require permisos"}`,
             `**\`Bot:\`** ${pB || "No require permisos"}`,
           ])
@@ -109,6 +109,10 @@ module.exports = class HelpCommand extends require("../../Class/Command") {
         .filter((x) => x.information.category == "Fun")
         .map((z) => "`" + z.information.name + "`")
         .join(", ");
+      const Suggestions = client.commands
+        .filter((x) => x.information.category == "Suggestions")
+        .map((z) => "`" + z.information.name + "`")
+        .join(", ");
       if (!args[0]) {
         const embedCommands = new Discord.MessageEmbed()
           .setDescription([
@@ -116,12 +120,13 @@ module.exports = class HelpCommand extends require("../../Class/Command") {
             ``,
             `Ejecute \`${prefix}help <command>\` para obtener ayuda e información de como usar el comando.`,
           ])
-          .addField("**Categorías:**", [
+          .addField("> **Categorías:**", [
             `🎵 Music`,
             `⚔️ Moderation`,
             `✨ Utility`,
             `🤣 Fun`,
             `⚙️ Configuration`,
+            `📬 Suggestions`,
             `🔞 NSFW`,
             ``,
             `**[Vota](https://top.gg/bot/761300013317488660/vote) | [Invítame](https://discord.com/oauth2/authorize?client_id=761300013317488660&scope=bot&permissions=4265078231) | [Soporte](https://discord.gg/b4s2kQwVm8)**`,
@@ -139,7 +144,7 @@ module.exports = class HelpCommand extends require("../../Class/Command") {
         case "Music":
           {
             const embedMúsica = new Discord.MessageEmbed()
-              .setTitle("> 🎵 Comandos de Música:")
+              .setTitle("🎵 | Comandos de Música:")
               .setDescription(Music)
               .setColor(client.color);
             message.reply(embedMúsica);
@@ -149,7 +154,7 @@ module.exports = class HelpCommand extends require("../../Class/Command") {
         case "Moderation":
           {
             const embedModeración = new Discord.MessageEmbed()
-              .setTitle("> ⚔️ Comandos de Moderación:")
+              .setTitle("⚔️ | Comandos de Moderación:")
               .setDescription(Moderation)
               .setColor(client.colores.redColor);
             message.reply(embedModeración);
@@ -159,7 +164,7 @@ module.exports = class HelpCommand extends require("../../Class/Command") {
         case "Utility":
           {
             const embedUtilidad = new Discord.MessageEmbed()
-              .setTitle("> ✨ Comandos de Utilidad:")
+              .setTitle("✨ | Comandos de Utilidad:")
               .setDescription(Utility)
               .setColor(client.colores.salmonColor);
             message.reply(embedUtilidad);
@@ -169,7 +174,7 @@ module.exports = class HelpCommand extends require("../../Class/Command") {
         case "Fun":
           {
             const embedFun = new Discord.MessageEmbed()
-              .setTitle("> 🤣 Comandos de Diversión:")
+              .setTitle("🤣 | Comandos de Diversión:")
               .setDescription(Fun)
               .setColor(client.colores.cyanColor);
             message.reply(embedFun);
@@ -179,17 +184,29 @@ module.exports = class HelpCommand extends require("../../Class/Command") {
         case "Config":
           {
             const embedConfiguración = new Discord.MessageEmbed()
-              .setTitle("> ⚙️ Comandos de Configuración:")
+              .setTitle("⚙️ | Comandos de Configuración:")
               .setDescription(Configuration)
               .setColor(client.colores.magentaColor);
             message.reply(embedConfiguración);
+          }
+          break;
+        case "suggestions":
+        case "Suggestions":
+          {
+            const embedSuggestions = new Discord.MessageEmbed()
+              .setTitle("📬 | Comandos de Sugerencias:")
+              .setDescription(Suggestions)
+              .setColor(client.colores.silverColor);
+            message.reply(embedSuggestions);
           }
           break;
         case "NSFW":
         case "nsfw":
           {
             const embedNSFW = new Discord.MessageEmbed()
-              .setTitle("> 🔞 Comandos de NSFW:")
+              .setTitle(
+                `${message.channel.nsfw ? "🔞" : "🚫"} | Comandos de NSFW:`
+              )
               .setDescription(
                 message.channel.nsfw
                   ? NSFW
@@ -206,12 +223,13 @@ module.exports = class HelpCommand extends require("../../Class/Command") {
               ``,
               `Ejecute \`${prefix}help <command>\` para obtener ayuda e información de como usar el comando.`,
             ])
-            .addField("**Categorías:**", [
+            .addField("> **Categorías:**", [
               `🎵 Music`,
               `⚔️ Moderation`,
               `✨ Utility`,
               `🤣 Fun`,
               `⚙️ Configuration`,
+              `📬 Suggestions`,
               `🔞 NSFW`,
               ``,
               `**[Vota](https://top.gg/bot/761300013317488660/vote) | [Invítame](https://discord.com/oauth2/authorize?client_id=761300013317488660&scope=bot&permissions=4265078231) | [Soporte](https://discord.gg/b4s2kQwVm8)**`,
