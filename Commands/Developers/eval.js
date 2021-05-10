@@ -24,7 +24,7 @@ module.exports = class EvalCommand extends require("../../Class/Command") {
     if (!client.devs.includes(message.author.id)) return;
     if (!args[0])
       return message.reply(
-        `${client.emotes.error} | **Debes ingresar algo para evaluar.**`
+        `〔 ${client.emotes.error} 〕**Debes ingresar algo para evaluar.**`
       );
     try {
       let output = await eval(args.join(" "));

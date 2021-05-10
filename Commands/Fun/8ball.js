@@ -24,25 +24,25 @@ module.exports = class OchoBallCommand extends require("../../Class/Command") {
       const Pregunta = args.join(" ");
       if (!Pregunta)
         return message.reply(
-          `${client.emotes.error} | **Debes ingresar una pregunta.**`
+          `〔 ${client.emotes.error} 〕**Debes ingresar una pregunta.**`
         );
 
       if (Pregunta.length > 71)
         return message.reply(
-          `${client.emotes.error} | **La pregunta no puede superar los 70 caracteres.**`
+          `〔 ${client.emotes.error} 〕**La pregunta no puede superar los 70 caracteres.**`
         );
       const Random =
         client.answers[Math.floor(Math.random() * client.answers.length)];
       const embed8ball = new Discord.MessageEmbed()
-        .setTitle("**:8ball: | Juego de la bola 8**")
+        .setTitle("> **:8ball: | Juego de la bola 8**")
         .setAuthor(
           message.author.tag,
           message.author.displayAvatarURL({ dynamic: true })
         )
         .setDescription([
-          `**\`Pregunta:\`** ${Pregunta}`,
+          `> **\`Pregunta:\`**\n${Pregunta}`,
           ``,
-          `**\`Respuesta:\`** ${Random}`,
+          `> **\`Respuesta:\`**\n${Random}`,
         ])
         .setColor(client.color);
       message.reply(embed8ball);

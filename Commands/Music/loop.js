@@ -22,7 +22,7 @@ module.exports = class LoopCommand extends require("../../Class/Command") {
             const serverQueue = client.distube.getQueue(message);
             if (!message.member.voice.channel)
                 return message.reply(
-                    `${client.emotes.error} | **Debes estar en un canal de voz para usar este comando.**`
+                    `〔 ${client.emotes.error} 〕**Debes estar en un canal de voz para usar este comando.**`
                 );
 
             if (
@@ -30,11 +30,11 @@ module.exports = class LoopCommand extends require("../../Class/Command") {
                 message.member.voice.channel.id !== message.guild.me.voice.channel.id
             )
                 return message.reply(
-                    `${client.emotes.error} | **No estas en el mismo canal que yo.**`
+                    `〔 ${client.emotes.error} 〕**No estas en el mismo canal que yo.**`
                 );
             if (!serverQueue)
                 return message.reply(
-                    `${client.emotes.error} | **No hay canciones en la lista.**`
+                    `〔 ${client.emotes.error} 〕**No hay canciones en la lista.**`
                 );
             let mode = null;
             switch (args[0]) {
@@ -51,7 +51,7 @@ module.exports = class LoopCommand extends require("../../Class/Command") {
             mode = client.distube.setRepeatMode(message, mode);
             mode = mode ? (mode === 2 ? "Repetir Queue" : "Repetir Song") : "Off";
             message.reply(
-                `${client.emotes.success} | **Ahora el modo loop esta para:** \`${mode}\``
+                `〔 ${client.emotes.success} 〕**Ahora el modo loop esta para:** \`${mode}\``
             );
         } catch (e) {
             client.error({

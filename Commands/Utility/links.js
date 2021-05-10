@@ -20,7 +20,7 @@ module.exports = class LinksCommand extends require("../../Class/Command") {
     const client = this.client;
     try {
       const embed = new client.discord.MessageEmbed()
-        .setTitle(":link: | **Enlaces Útiles**")
+        .setTitle("> :link: | **Enlaces Útiles**")
         .setDescription([
           `[Mi invitación](https://discord.com/oauth2/authorize?client_id=761300013317488660&scope=bot&permissions=4265078231)`,
           `[Servidor de soporte](https://discord.gg/b4s2kQwVm8)`,
@@ -32,7 +32,7 @@ module.exports = class LinksCommand extends require("../../Class/Command") {
         .send(embed)
         .then(() => {
           message.reply(
-            `${client.emotes.invite} | **Revisa tus mensajes directos.**`
+            `〔 ${client.emotes.invite} 〕**Revisa tus mensajes directos.**`
           );
         })
         .catch((e) => {

@@ -65,14 +65,14 @@ module.exports = class NameCommand extends require("../../Class/Command") {
             }** roles más`
           : rolesxd.join(", ");
       const embed = new Discord.MessageEmbed()
-        .setTitle(`__**Información de ${user.user.username}**__`)
+        .setTitle(`> **Información de ${user.user.username}**`)
         .setColor(
           user.roles.color
             ? user.roles.color.hexColor
             : client.colores.limeColor
         )
         .setThumbnail(user.user.displayAvatarURL({ dynamic: true }))
-        .addField(`**Información del usuario:**`, [
+        .setDescription([
           `**\`Tag:\`** ${user.user.tag}`,
           `**\`ID:\`**  ${user.user.id}`,
           `**\`Mención:\`** <@!${user.user.id}>`,
@@ -80,20 +80,28 @@ module.exports = class NameCommand extends require("../../Class/Command") {
             .toUTCString()
             .substr(0, 16)} (${checkDays(user.user.createdAt)})`,
         ])
-        .addField("**Información del usuario en el servidor:**", [
+        // .addField(`> **Información del usuario:**`, [
+        //   `**\`Tag:\`** ${user.user.tag}`,
+        //   `**\`ID:\`**  ${user.user.id}`,
+        //   `**\`Mención:\`** <@!${user.user.id}>`,
+        //   `**\`Creación de la cuenta:\`** ${user.user.createdAt
+        //     .toUTCString()
+        //     .substr(0, 16)} (${checkDays(user.user.createdAt)})`,
+        // ])
+        .addField("> **Información del usuario en el servidor:**", [
           `**\`Fecha de entrada:\`** ${user.joinedAt
             .toUTCString()
             .substr(0, 16)} (${checkDays(user.joinedAt)})`,
           `**\`Color Hex:\`** ${user.displayHexColor || "No hay color"}`,
           `**\`Nickname:\`** ${user.nickname || "No tiene nickname"}`,
         ])
-        .addField(`**Roles del miembro:**`, [
+        .addField(`> **Roles del miembro:**`, [
           `**\`Rol más alto:\`** ${user.roles.highest || "No tiene roles"}`,
           `**\`Rol de color:\`** ${user.roles.color || "No hay rol con color"}`,
           `**\`Roles totales:\`** ${listaRoles || "No tiene roles"}`,
         ])
         .addField(
-          "**Permisos del miembro en el servidor:**",
+          "> **Permisos del miembro en el servidor:**",
           Markdown(user.permissions.toArray().join(", "))
         );
 

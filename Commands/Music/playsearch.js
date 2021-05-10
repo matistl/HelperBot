@@ -26,7 +26,7 @@ module.exports = class PlaySearchCommand extends (
     try {
       if (!message.member.voice.channel)
         return message.reply(
-          `${client.emotes.error} | **Debes estar en un canal de voz para usar este comando.**`
+          `〔 ${client.emotes.error} 〕**Debes estar en un canal de voz para usar este comando.**`
         );
 
       if (
@@ -34,7 +34,7 @@ module.exports = class PlaySearchCommand extends (
         message.member.voice.channel.id !== message.guild.me.voice.channel.id
       )
         return message.reply(
-          `${client.emotes.error} | **No estas en el mismo canal que yo.**`
+          `〔 ${client.emotes.error} 〕**No estas en el mismo canal que yo.**`
         );
 
       const channelXD = message.member.voice.channel;
@@ -42,7 +42,7 @@ module.exports = class PlaySearchCommand extends (
         return message.reply(
           new Discord.MessageEmbed()
             .setDescription(
-              `${client.emotes.error} | **No tengo los permisos necesarios para reproducir la música.**\n${client.emotes.waring} | **Permiso requerido:** \`VIEW_CHANNEL\`**.**`
+              `〔 ${client.emotes.error} 〕**No tengo los permisos necesarios para reproducir la música.**\n${client.emotes.waring} | **Permiso requerido:** \`VIEW_CHANNEL\`.`
             )
             .setColor(client.colores.redColor)
             .setImage("https://i.imgur.com/ecUiHLM.gif")
@@ -52,7 +52,7 @@ module.exports = class PlaySearchCommand extends (
         return message.reply(
           new Discord.MessageEmbed()
             .setDescription(
-              `${client.emotes.error} | **No tengo los permisos necesarios para reproducir la música.**\n${client.emotes.waring} | **Permiso requerido:** \`CONNECT\`**.**`
+              `〔 ${client.emotes.error} 〕**No tengo los permisos necesarios para reproducir la música.**\n${client.emotes.waring} | **Permiso requerido:** \`CONNECT\`.`
             )
             .setColor(client.colores.redColor)
             .setImage("https://i.imgur.com/mfSw6AH.gif")
@@ -62,7 +62,7 @@ module.exports = class PlaySearchCommand extends (
         return message.reply(
           new Discord.MessageEmbed()
             .setDescription(
-              `${client.emotes.error} | **No tengo los permisos necesarios para reproducir la música.**\n${client.emotes.waring} | **Permiso requerido:** \`SPEAK\`**.**`
+              `〔 ${client.emotes.error} 〕**No tengo los permisos necesarios para reproducir la música.**\n${client.emotes.waring} | **Permiso requerido:** \`SPEAK\`.`
             )
             .setColor(client.colores.redColor)
             .setImage("https://i.imgur.com/HvpTEzD.gif")
@@ -70,13 +70,13 @@ module.exports = class PlaySearchCommand extends (
       const search = args.join(" ");
       if (!search)
         return message.reply(
-          `${client.emotes.error} | **Ingresa el nombre de la canción a buscar.**`
+          `〔 ${client.emotes.error} 〕**Ingresa el nombre de la canción a buscar.**`
         );
 
       await client.distube.search(search).then((result) => {
         message.channel
           .send(
-            `<:HelperBot_Youtube:832241586896109608> | **Buscando:** \`${search}\` **en YouTube.**`
+            `〔 <:HelperBot_Youtube:832241586896109608> 〕**Buscando:** \`${search}\` **en YouTube.**`
           )
           .then(async (msg) => {
             let i = 0;
@@ -85,12 +85,12 @@ module.exports = class PlaySearchCommand extends (
                 .delete()
                 .catch((e) =>
                   message.reply(
-                    `${client.emotes.error} | **${e.name}:** ${e.message}`,
+                    `〔 ${client.emotes.error} 〕**${e.name}:** ${e.message}`,
                     { split: { char: "", maxLength: 1999 } }
                   )
                 );
               const embedResults = new Discord.MessageEmbed()
-                .setTitle(`__**Resultados de la busqueda**__`)
+                .setTitle(`> **Resultados de la busqueda**`)
                 .setDescription(
                   `${result
                     .map(
@@ -99,7 +99,7 @@ module.exports = class PlaySearchCommand extends (
                     .slice(0, 10)
                     .join("\n")}`
                 )
-                .setColor(client.colores.discordColor)
+                .setColor(client.colores.magentaColor)
                 .setAuthor(
                   message.author.tag,
                   message.author.displayAvatarURL({ dynamic: true })
@@ -120,7 +120,7 @@ module.exports = class PlaySearchCommand extends (
           })
           .catch((e) => {
             message.reply(
-              `${client.emotes.error} | **${e.name}:** ${e.message}`,
+              `〔 ${client.emotes.error} 〕**${e.name}:** ${e.message}`,
               { split: { char: "", maxLength: 1999 } }
             );
           });

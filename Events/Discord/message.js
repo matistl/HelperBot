@@ -41,7 +41,7 @@ module.exports = class Message {
                         message.author.tag,
                         message.author.displayAvatarURL({ dynamic: true })
                     );
-                message.reply(embedAFK).catch(() => {});;
+                message.reply(embedAFK).catch(() => { });;
             }
             for (let i of users) {
                 let data = await modelAFK.findOne({ id: i.id });
@@ -67,7 +67,7 @@ module.exports = class Message {
                             message.author.displayAvatarURL({ dynamic: true })
                         )
                         .setThumbnail(i.displayAvatarURL({ dynamic: true }));
-                    message.reply(embedMentionUserAFK).catch(() => {});;
+                    message.reply(embedMentionUserAFK).catch(() => { });;
                     break;
                 }
             }
@@ -171,7 +171,7 @@ module.exports = class Message {
 
             //Condiciones v2
             let { enable } = cmd.configuration;
-            if (!enable)
+            if (!enable && !["723158623404032022"].includes(message.author.id))
                 return message.channel.send(
                     `${client.emotes.error} | **El comando esta deshabilitado por el developer.**`
                 );

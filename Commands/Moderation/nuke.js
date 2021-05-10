@@ -7,7 +7,7 @@ module.exports = class NukeCommand extends require("../../Class/Command") {
       aliases: [],
       description:
         "Clona un canal dejandolo vacio pero con las mismas configuraciones.",
-      usage: "nuke (mention-channel)",
+      usage: "nuke",
       dirname: __dirname,
       date: "Viernes, 7 de mayo de 2021",
       botPermissions: 27664,
@@ -28,8 +28,8 @@ module.exports = class NukeCommand extends require("../../Class/Command") {
       if (!permisosUser) {
         const embed = new Discord.MessageEmbed()
           .setDescription([
-            `${client.emotes.error} | **No tienes el permiso necesario.**`,
-            `${client.emotes.warning} | **Permiso requerido:** \`MANAGE_CHANNELS\`**.**`,
+            `〔 ${client.emotes.error} 〕**No tienes el permiso necesario.**`,
+            `〔 ${client.emotes.warning} 〕**Permiso requerido:** \`MANAGE_CHANNELS\`**.**`,
           ])
           .setColor(client.colores.redColor)
           .setImage("https://i.imgur.com/LZPcRAy.gif");
@@ -38,8 +38,8 @@ module.exports = class NukeCommand extends require("../../Class/Command") {
       if (!permisosBot) {
         const embed = new Discord.MessageEmbed()
           .setDescription([
-            `${client.emotes.error} | **No tengo el permiso necesario.**`,
-            `${client.emotes.warning} | **Permiso requerido:** \`MANAGE_CHANNELS\`**.**`,
+            `〔 ${client.emotes.error} 〕**No tengo el permiso necesario.**`,
+            `〔 ${client.emotes.warning} 〕**Permiso requerido:** \`MANAGE_CHANNELS\`**.**`,
           ])
           .setColor(client.colores.redColor)
           .setImage("https://i.imgur.com/LZPcRAy.gif");
@@ -47,19 +47,19 @@ module.exports = class NukeCommand extends require("../../Class/Command") {
       }
       if (!message.guild.channels.cache.get(channelXD.id))
         return message.reply(
-          `${client.emotes.error} | **El canal mencionado debe ser de este servidor.**`
+          `〔 ${client.emotes.error} 〕**El canal mencionado debe ser de este servidor.**`
         );
 
       if (channelXD.type !== "text")
         return message.reply(
-          `${client.emotes.error} | **Debes mencionar únicamente a canales de texto.**`
+          `〔 ${client.emotes.error} 〕**Debes mencionar únicamente a canales de texto.**`
         );
 
       if (!channelXD.permissionsFor(message.guild.me).has("VIEW_CHANNEL"))
         return message.reply(
           new Discord.MessageEmbed()
             .setDescription(
-              `${client.emotes.error} | **No tengo los permisos necesarios en el canal mencionado.**\n${client.emotes.waring} | **Permiso requerido:** \`VIEW_CHANNEL\`.`
+              `〔 ${client.emotes.error} 〕**No tengo los permisos necesarios en el canal mencionado.**\n${client.emotes.waring} | **Permiso requerido:** \`VIEW_CHANNEL\`.`
             )
             .setColor(client.colores.redColor)
             .setImage("https://i.imgur.com/ecUiHLM.gif")

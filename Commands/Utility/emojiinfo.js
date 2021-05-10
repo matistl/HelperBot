@@ -25,7 +25,7 @@ module.exports = class EmojiInfoCommand extends require("../../Class/Command") {
       const emojiProvided = args[0];
       if (!emojiProvided)
         return message.reply(
-          `${client.emotes.error} | **Debes ingresar un emoji.**`
+          `〔 ${client.emotes.error} 〕**Debes ingresar un emoji.**`
         );
 
       const match =
@@ -34,12 +34,12 @@ module.exports = class EmojiInfoCommand extends require("../../Class/Command") {
 
       if (!match || !match[1])
         return message.reply(
-          `${client.emotes.error} | **Debes ingresar un emoji válido, debe ser de este servidor.**`
+          `〔 ${client.emotes.error} 〕**Debes ingresar un emoji válido, debe ser de este servidor.**`
         );
       let emoji = message.guild.emojis.cache.get(match[1]);
       if (!emoji)
         return message.reply(
-          `${client.emotes.error} | **Debes ingresar un emoji válido, debe ser de este servidor.**`
+          `〔 ${client.emotes.error} 〕**Debes ingresar un emoji válido, debe ser de este servidor.**`
         );
       let checkOrCross = (bool) =>
         bool
@@ -47,7 +47,7 @@ module.exports = class EmojiInfoCommand extends require("../../Class/Command") {
           : "<:HelperBot_Cross:836408158120837180>";
       const embedEmojiInfo = new Discord.MessageEmbed()
         .setColor(client.colores.pinkColor)
-        .setTitle("__**Información del emoji**__")
+        .setTitle("> **Información del emoji**")
         .setDescription([
           `**\`Nombre:\`** ${emoji.name}`,
           `**\`ID:\`** ${emoji.id}`,
@@ -66,7 +66,7 @@ module.exports = class EmojiInfoCommand extends require("../../Class/Command") {
             .substr(0, 8)} (${checkDays(emoji.createdAt)})`,
           `**\`URL:\`** [Click aquí](${emoji.url})`,
         ])
-        .addField("**Otra Información:**", [
+        .addField("> **Otra Información:**", [
           `**\`Usable por:\`** ${
             emoji.roles.cache.map((role) => "<@&" + role.id + ">").join(", ") ||
             "Todos"

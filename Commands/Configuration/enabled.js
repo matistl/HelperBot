@@ -27,31 +27,31 @@ module.exports = class EnabledCommand extends require("../../Class/Command") {
       if (!message.member.permissions.has(8)) {
         const embed = new Discord.MessageEmbed()
           .setDescription(
-            `${client.emotes.error} | **No tienes el permiso necesario.**\n${client.emotes.warning} | **Permiso requerido:** \`ADMINISTRATOR\`**.**`
+            `〔 ${client.emotes.error} 〕**No tienes el permiso necesario.**\n〔 ${client.emotes.warning} 〕 | **Permiso requerido:** \`ADMINISTRATOR\`.`
           )
           .setImage("https://i.imgur.com/mcqbxZJ.gif")
           .setColor(client.colores.redColor);
         return message.reply(embed);
       }
       if (!commandName)
-        return message.channel.send(
-          `${client.emotes.error} | **Debes ingresar el nombre del comando el cual quieres habilitar o deshabilitar.**`
+        return message.reply(
+          `〔 ${client.emotes.error} 〕**Debes ingresar el nombre del comando el cual quieres habilitar o deshabilitar.**`
         );
       if (!client.commands.has(commandName))
-        return message.channel.send(
-          `${client.emotes.error} | **Debes ingresar un comando válido.**`
+        return message.reply(
+          `〔 ${client.emotes.error} 〕**Debes ingresar un comando válido.**`
         );
       if (!commandStatus)
-        return message.channel.send(
-          `${
+        return message.reply(
+          `〔 ${
             client.emotes.error
-          } | **Debes ingresar un estado válido.**\nUsa: \`${await client.getPrefix(
+          } 〕**Debes ingresar un estado válido.**\nUsa: \`${await client.getPrefix(
             message
           )}help ${this.information.name}\``
         );
       if (commandName === this.information.name)
-        return message.channel.send(
-          `${client.emotes.error} | **No puedes deshabilitar ese comando.**`
+        return message.reply(
+          `〔 ${client.emotes.error} 〕**No puedes deshabilitar ese comando.**`
         );
       switch (commandStatus) {
         case "true":
@@ -60,16 +60,16 @@ module.exports = class EnabledCommand extends require("../../Class/Command") {
             async (err, data) => {
               if (err) throw err;
               if (!data) {
-                message.channel.send(
-                  `${client.emotes.error} | **Ese comando no esta deshabilitado.**`
+                message.reply(
+                  `〔 ${client.emotes.error} 〕**Ese comando no esta deshabilitado.**`
                 );
               } else {
                 await commandSetup.findOneAndDelete({
                   guildID: message.guild.id,
                   commandName: commandName,
                 });
-                message.channel.send(
-                  `${client.emotes.success} | **El comando fue hablitado correctamente.**`
+                message.reply(
+                  `〔 ${client.emotes.success} 〕**El comando fue hablitado correctamente.**`
                 );
               }
             }
@@ -81,8 +81,8 @@ module.exports = class EnabledCommand extends require("../../Class/Command") {
             async (err, data) => {
               if (err) throw err;
               if (data) {
-                message.channel.send(
-                  `${client.emotes.error} | **Ese comando ya esta deshabilitado.**`
+                message.reply(
+                  `〔 ${client.emotes.error} 〕**Ese comando ya esta deshabilitado.**`
                 );
               } else {
                 let xdddd = new commandSetup({
@@ -91,18 +91,18 @@ module.exports = class EnabledCommand extends require("../../Class/Command") {
                   commandEnable: false,
                 });
                 xdddd.save();
-                message.channel.send(
-                  `${client.emotes.success} | **El comando fue deshablitado correctamente.**`
+                message.reply(
+                  `〔 ${client.emotes.success} 〕**El comando fue deshablitado correctamente.**`
                 );
               }
             }
           );
           break;
         default:
-          message.channel.send(
-            `${
+          message.reply(
+            `〔 ${
               client.emotes.error
-            } | **Debes ingresar un estado válido.**\nUsa: \`${await client.getPrefix(
+            } 〕**Debes ingresar un estado válido.**\nUsa: \`${await client.getPrefix(
               message
             )}help ${this.information.name}\``
           );

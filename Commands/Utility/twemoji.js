@@ -27,7 +27,7 @@ module.exports = class TwemojiCommand extends require("../../Class/Command") {
       const prefix = await client.getPrefix(message);
       if (!emoji)
         return message.reply(
-          `${client.emotes.error} | **Debes ingresar un emoji.**`
+          `〔 ${client.emotes.error} 〕**Debes ingresar un emoji.**`
         );
 
       const number = parseInt(args.slice(1).join(" "));
@@ -38,7 +38,7 @@ module.exports = class TwemojiCommand extends require("../../Class/Command") {
       );
       if (!regexp)
         return message.reply(
-          `${client.emotes.error} | **Debes ingresar un emoji válido.**`
+          `〔 ${client.emotes.error} 〕**Debes ingresar un emoji válido.**`
         );
 
       const a = parse(`${emoji}`);
@@ -52,7 +52,7 @@ module.exports = class TwemojiCommand extends require("../../Class/Command") {
             "TwEmojiHelperBot.png"
           );
           message.reply(
-            `**Puedes usar:** \`${prefix}twemoji ${emoji} [size]\` **para cambiar el tamaño de la imagen.**`,
+            `> **Puedes usar:** \`${prefix}twemoji ${emoji} (size)\` **para cambiar el tamaño de la imagen.**`,
             ab
           );
         }

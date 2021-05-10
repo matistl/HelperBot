@@ -1,5 +1,9 @@
 const { Client, Collection, MessageEmbed } = require("discord.js");
-const { getPrefix, modlogs, getSuggestionChannel } = require("../Util/Functions.js");
+const {
+  getPrefix,
+  modlogs,
+  getSuggestionChannel,
+} = require("../Util/Functions.js");
 let leer = require("util").promisify(require("fs").readdir);
 
 class Helper extends Client {
@@ -9,6 +13,11 @@ class Helper extends Client {
     this.aliases = new Collection();
     this.skipvote = new Map();
     this.snipes = new Map();
+    this.devs = [
+      "507367752391196682",
+      "723158623404032022",
+      "342382341185994757",
+    ];
     this.modlogs = modlogs;
     this.getPrefix = getPrefix;
     this.getSuggestionChannel = getSuggestionChannel;

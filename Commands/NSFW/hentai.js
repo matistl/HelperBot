@@ -24,12 +24,12 @@ module.exports = class HentaiCommand extends require("../../Class/Command") {
     try {
       if (!message.channel.nsfw)
         return message.reply(
-          `${client.emotes.error} | **No puedes usar este comando en un canal que no está marcado como NSFW.**`
+          `〔 ${client.emotes.error} 〕**No puedes usar este comando en un canal que no está marcado como NSFW.**`
         );
 
       const img = await hmtai.nsfw.ass();
       const embed = new Discord.MessageEmbed()
-        .setTitle("Disfrútalo \❤️.")
+        .setTitle("> Disfrútalo \❤️.")
         .setImage(img)
         .setColor("RANDOM")
         .setAuthor(

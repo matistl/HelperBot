@@ -25,7 +25,7 @@ module.exports = class ServericonCommand extends (
     try {
       const embedIconServer = new Discord.MessageEmbed()
         .setDescription(
-          `[Ícono del servidor](${message.guild.iconURL({
+          `> [Ícono del servidor](${message.guild.iconURL({
             size: 2048,
             dynamic: true,
           })})`

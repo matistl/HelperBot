@@ -44,7 +44,7 @@ module.exports = class HelpCommand extends require("../../Class/Command") {
         }
         // const pB = new Discord.Permissions(permisosBot).toArray().join(", ");
         const embedHelpCommand = new client.discord.MessageEmbed()
-          .setTitle(`__**Comando ${capi(cmd.information.name)}**__`)
+          .setTitle(`> **Comando ${capi(cmd.information.name)}**`)
           .setThumbnail(client.user.displayAvatarURL())
           .setAuthor(
             message.author.tag,

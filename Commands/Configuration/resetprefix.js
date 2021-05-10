@@ -27,7 +27,7 @@ module.exports = class ResetPrefixCommand extends (
       if (!message.member.permissions.has(8)) {
         const embed = new Discord.MessageEmbed()
           .setDescription(
-            `${client.emotes.error} | **No tienes el permiso necesario.**\n${client.emotes.warning} | **Permiso requerido:** \`ADMINISTRATOR\`**.**`
+            `〔 ${client.emotes.error} 〕**No tienes el permiso necesario.**\n〔 ${client.emotes.warnings} 〕**Permiso requerido:** \`ADMINISTRATOR\`.`
           )
           .setImage("https://i.imgur.com/mcqbxZJ.gif")
           .setColor(client.colores.redColor);
@@ -38,10 +38,10 @@ module.exports = class ResetPrefixCommand extends (
       });
       if (!borrarPrefix)
         return message.reply(
-          `${client.emotes.error} | **No hay un prefix personalizado en el servidor.**`
+          `〔 ${client.emotes.error} 〕**No hay un prefix personalizado en el servidor.**`
         );
       message.reply(
-        `${client.emotes.success} | **El prefix a sido restablecido! El prefix ahora es:** \`h!\``
+        `〔 ${client.emotes.success} 〕**El prefix a sido restablecido! El prefix ahora es:** \`h!\``
       );
     } catch (e) {
       client.error({

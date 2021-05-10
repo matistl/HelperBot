@@ -33,16 +33,16 @@ module.exports = class BlacklistCommand extends require("../../Class/Command") {
 
       if (!user)
         return message.reply(
-          `${client.emotes.error} | **Debes mencionar o darme la ID de un usuario.**`
+          `〔 ${client.emotes.error} 〕**Debes mencionar o darme la ID de un usuario.**`
         );
 
       if (user.id === "723158623404032022")
         return message.reply(
-          `${client.emotes.error} | **No puedo añadir a la blacklist a mi developer.**`
+          `〔 ${client.emotes.error} 〕**No puedo añadir a la blacklist a mi developer.**`
         );
       if (user.id === "493063208576483329")
         return message.reply(
-          `${client.emotes.error} | **No puedo añadir a la blacklist a mi developer.**`
+          `〔 ${client.emotes.error} 〕**No puedo añadir a la blacklist a mi developer.**`
         );
       switch (args[0]) {
         case "add":
@@ -50,7 +50,7 @@ module.exports = class BlacklistCommand extends require("../../Class/Command") {
             if (err) throw err;
             if (data) {
               return message.reply(
-                `${client.emotes.error} | **Ese usuario ya está en la blacklist.**`
+                `〔 ${client.emotes.error} 〕**Ese usuario ya está en la blacklist.**`
               );
             } else {
               data = new blacklistModel({
@@ -62,7 +62,7 @@ module.exports = class BlacklistCommand extends require("../../Class/Command") {
             }
             data.save();
             message.reply(
-              `${client.emotes.success} | **El usuario:** \`${user.tag}\` **fue añadido correctamente de la blacklist.**`
+              `〔 ${client.emotes.success} 〕**El usuario:** \`${user.tag}\` **fue añadido correctamente de la blacklist.**`
             );
           });
           break;
@@ -72,11 +72,11 @@ module.exports = class BlacklistCommand extends require("../../Class/Command") {
             if (data) {
               await blacklistModel.findOneAndDelete({ ID: user.id });
               return message.reply(
-                `${client.emotes.success} | **El usuario:** \`${user.tag}\` **fue removido correctamente de la blacklist.**`
+                `〔 ${client.emotes.success} 〕**El usuario:** \`${user.tag}\` **fue removido correctamente de la blacklist.**`
               );
             } else {
               return message.reply(
-                `${client.emotes.error} | **Ese usuario no está en la blacklist.**`
+                `〔 ${client.emotes.error} 〕**Ese usuario no está en la blacklist.**`
               );
             }
           });
@@ -86,7 +86,7 @@ module.exports = class BlacklistCommand extends require("../../Class/Command") {
             if (err) throw err;
             if (!data) {
               return message.reply(
-                `${client.emotes.error} | **Ese usuario no está en la blacklist.**`
+                `〔 ${client.emotes.error} 〕**Ese usuario no está en la blacklist.**`
               );
             } else {
               const embed = new client.discord.MessageEmbed()
@@ -111,7 +111,7 @@ module.exports = class BlacklistCommand extends require("../../Class/Command") {
           break;
         default:
           message.reply(
-            `${client.emotes.error} | **Debes ingresar que quireres hacer:** \`<add | rm | info>\``
+            `〔 ${client.emotes.error} 〕**Debes ingresar que quireres hacer:** \`<add | rm | info>\``
           );
           break;
       }

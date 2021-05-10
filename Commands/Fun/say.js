@@ -22,7 +22,7 @@ module.exports = class SayCommand extends require("../../Class/Command") {
       let texto = args.join(" ");
       if (!texto)
         return message.reply(
-          `${client.emotes.error} | **Debes ingresar un texto a repetir.**`
+          `〔 ${client.emotes.error} 〕**Debes ingresar un texto a repetir.**`
         );
       if (message.deletable) {
         await message.delete();

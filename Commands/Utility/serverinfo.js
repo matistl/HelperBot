@@ -100,8 +100,8 @@ module.exports = class ServerInfoCommand extends (
       const embed = new Discord.MessageEmbed()
         .setColor("RANDOM")
         .setThumbnail(message.guild.iconURL({ dynamic: true }))
-        .setTitle(`__**Información del servidor**__`)
-        .addField("**Información General:**", [
+        .setTitle(`> **Información del servidor**`)
+        .addField("> **Información General:**", [
           `**\`Nombre:\`** ${message.guild.name}`,
           `**\`ID:\`** ${message.guild.id}`,
           `**\`Dueño:\`** ${message.guild.owner.user.tag} \`${message.guild.owner.user.id}\``,
@@ -115,7 +115,7 @@ module.exports = class ServerInfoCommand extends (
           `**\`Canal de reglas:\`** ${rules1}`,
           `**\`Canal AFK:\`** ${afk1}`,
         ])
-        .addField("**Estadisticas:**", [
+        .addField("> **Estadisticas:**", [
           `**\`Usuarios:\`** ${message.guild.members.cache.size} \`Total\` | ${
             message.guild.members.cache.filter((member) => !member.user.bot)
               .size
@@ -134,11 +134,11 @@ module.exports = class ServerInfoCommand extends (
               .join(" | ") || "No hay boosters"
           }`,
         ])
-        .addField("**Información de los emojis:**", [
+        .addField("> **Información de los emojis:**", [
           `**\`Número de emojis:\`** ${message.guild.emojis.cache.size}`,
           `**\`Emojis:\`** \n${listaEmojis}`,
         ])
-        .addField("**Información de los roles:**", [
+        .addField("> **Información de los roles:**", [
           `**\`Número de Roles:\`** ${message.guild.roles.cache.size}`,
           `**\`Roles:\`** \n${listaRoles}`,
         ]);

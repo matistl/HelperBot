@@ -39,8 +39,8 @@ module.exports = class AvatarCommand extends require("../../Class/Command") {
         );
       const embedAvatar = new Discord.MessageEmbed()
         .setDescription([
-          `**Avatar de:** \`${user.user.tag}\``,
-          `[URL del Avatar](${user.user.displayAvatarURL({
+          `> **Avatar de:** \`${user.user.tag}\``,
+          `> [URL del Avatar](${user.user.displayAvatarURL({
             dynamic: true,
             size: 2048,
           })})`,

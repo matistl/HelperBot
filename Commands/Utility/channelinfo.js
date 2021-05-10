@@ -35,14 +35,13 @@ module.exports = class ChannelInfoCommand extends (
       };
       const channel =
         message.mentions.channels.first() ||
-        message.guild.channels.cache.get(args[0]) ||
-        message.channel;
+        message.guild.channels.cache.get(args[0]) || message.channel;
       if (!message.guild.channels.cache.has(channel.id))
         return message.reply(
-          `${client.emotes.error} | **Menciona únicamente a canales del servidor.**`
+          `〔 ${client.emotes.error} 〕**Menciona únicamente a canales del servidor.**`
         );
       const infoEmbed = new Discord.MessageEmbed()
-        .setTitle("__**Información del canal**__")
+        .setTitle("> **Información del canal**")
         .setColor(client.colores.yellowColor)
         .setDescription([
           `**\`Nombre:\`** ${channel.name}`,
@@ -53,7 +52,7 @@ module.exports = class ChannelInfoCommand extends (
             channel.parent ? channel.parent.name : "No hay categoría"
           }`,
         ])
-        .addField("**Otra Información:**", [
+        .addField("> **Otra Información:**", [
           `**\`Número Posición:\`** ${channel.rawPosition}`,
           `**\`Cooldown:\`** ${humanizeDuration(
             channel.rateLimitPerUser + "000",
@@ -68,9 +67,9 @@ module.exports = class ChannelInfoCommand extends (
             .substr(0, 9)} (${checkDays(channel.createdAt)})`,
           `**\`NSFW:\`** ${channel.nsfw ? "Sí" : "No"}`,
         ])
-        .addField("**Tópico:**", channel.topic || "No hay tópico")
+        .addField("> **Tópico:**", channel.topic || "No hay tópico")
         .addField(
-          "**Permisos:**",
+          "> **Permisos:**",
           Markdown(
             channel
               .permissionsFor(message.guild.roles.cache.first())

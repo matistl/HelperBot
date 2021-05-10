@@ -25,7 +25,7 @@ module.exports = class NameCommand extends require("../../Class/Command") {
 
       if (!message.member.voice.channel)
         return message.reply(
-          `${client.emotes.error} | **Debes estar en un canal de voz para usar este comando.**`
+          `〔 ${client.emotes.error} 〕**Debes estar en un canal de voz para usar este comando.**`
         );
 
       if (
@@ -33,12 +33,12 @@ module.exports = class NameCommand extends require("../../Class/Command") {
         message.member.voice.channel.id !== message.guild.me.voice.channel.id
       )
         return message.reply(
-          `${client.emotes.error} | **No estas en el mismo canal que yo.**`
+          `〔 ${client.emotes.error} 〕**No estas en el mismo canal que yo.**`
         );
 
       if (!queue)
         return message.channel.send(
-          `${client.emotes.error} | **No hay canciones en la lista.**`
+          `〔 ${client.emotes.error} 〕**No hay canciones en la lista.**`
         );
 
       let track = queue.songs[0];
@@ -54,7 +54,7 @@ module.exports = class NameCommand extends require("../../Class/Command") {
             .thumbnails[0].url
         )
         .setDescription([
-          "**Información de la canción:**",
+          "> **Información de la canción:**",
           `**\`Título:\`** ${track.name}`,
           `**\`Autor:\`** __[${
             client.distube.getQueue(message).songs[0].info.videoDetails.author

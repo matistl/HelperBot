@@ -49,18 +49,24 @@ const Functions = {
     message
   ) {
     const embedSuggestion = new MessageEmbed()
-      .setAuthor(
-        `${message.author.tag} | Nueva sugerencia`,
-        message.author.displayAvatarURL({ dynamic: true })
-      )
+      // .setAuthor(
+      //   `${message.author.tag} | Nueva sugerencia`,
+      //   message.author.displayAvatarURL({ dynamic: true })
+      // )
+      .setTitle("> **Sugerencia:**")
       .setThumbnail(message.author.displayAvatarURL({ dynamic: true }))
       .setDescription(Suggest)
-      .addField("> **Estado:**", Status)
+      .addField("> **Información:**", [
+        `**\`Código:\`** ${Code}`,
+        `**\`Estado:\`** ${Status}`,
+        `**\`Sugerente:\`** ${message.author.tag} **(${message.author.id})**`,
+      ])
       .setColor(Color)
       .setFooter(
-        `Código: ${Code} | ${new Date().toLocaleString("en-US", {
+        `${message.guild.name} | ${new Date().toLocaleString("en-US", {
           timeZone: "America/Merida",
-        })}`
+        })}`,
+        message.guild.iconURL({ dynamic: true })
       );
     const data = await suggestions.findOne({ guildID: message.guild.id });
     if (!data) return;
@@ -70,6 +76,7 @@ const Functions = {
       .then(async (msg) => {
         const newData = new codeSuggest({
           suggestCode: Code,
+          suggestAuthor: message.author.id,
           suggestChannelID: msg.channel.id,
           suggestMessageID: msg.id,
         });

@@ -7,7 +7,7 @@ module.exports = class BotInfoCommand extends require("../../Class/Command") {
     constructor(client) {
         super(client, {
             name: "botinfo",
-            aliases: ["stats", "bot"],
+            aliases: ["bot"],
             description: "Da la información sobre el bot",
             usage: "botinfo",
             dirname: __dirname,
@@ -39,7 +39,7 @@ module.exports = class BotInfoCommand extends require("../../Class/Command") {
                     message.author.displayAvatarURL({ dynamic: true })
                 )
                 .setColor(client.colores.fuchsiaColor)
-                .setTitle(`__**Información de ${client.user.username}**__`)
+                .setTitle(`> **Información de ${client.user.username}**`)
                 .setDescription([
                     `**\`Tag:\`** ${client.user.tag}`,
                     `**\`ID:\`** ${client.user.id}`,
@@ -54,7 +54,7 @@ module.exports = class BotInfoCommand extends require("../../Class/Command") {
                     `**\`Prefix personalizado:\`** ${await client.getPrefix(message) ? prefix : "No hay"}`,
                     `**\`Ping:\`** ${client.ws.ping}`,
                 ])
-                .addField("__**Otra Información:**__", [
+                .addField("> **Otra Información:**", [
                     `**\`Lenguaje de programación:\`** JavaScript`,
                     `**\`Versión del bot:\`** 1.0.0 (Beta)`,
                     `**\`Uptime:\`** ${actividad}`,
@@ -69,7 +69,7 @@ module.exports = class BotInfoCommand extends require("../../Class/Command") {
                         1024
                     ).toFixed(2)} MB`,
                 ], true)
-                .addField("__**Estadisticas:**__", [
+                .addField("> **Estadísticas:**", [
                     `**\`Usuarios:\`** ${client.guilds.cache
                         .reduce((c, v) => c + v.memberCount, 0)
                         .toLocaleString()}`,
@@ -78,7 +78,7 @@ module.exports = class BotInfoCommand extends require("../../Class/Command") {
                     `**\`Emojis:\`** ${client.emojis.cache.size}`,
                 ], true)
                 .addField(
-                    "__**Enlaces:**__",
+                    "> **Enlaces:**",
                     "[Mi invitación](https://discord.com/oauth2/authorize?client_id=761300013317488660&scope=bot&permissions=4265078231)\n[Servidor de soporte](https://discord.gg/b4s2kQwVm8)\n[Top.gg](https://top.gg/bot/761300013317488660/vote)\n[BotsForDiscord](https://botsfordiscord.com/bot/761300013317488660/vote)", true
                 )
                 .setThumbnail(client.user.displayAvatarURL())

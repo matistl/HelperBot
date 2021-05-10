@@ -25,7 +25,7 @@ module.exports = class QueueCommand extends require("../../Class/Command") {
 
       if (!message.member.voice.channel)
         return message.reply(
-          `${client.emotes.error} | **Debes estar en un canal de voz para usar este comando.**`
+          `〔 ${client.emotes.error} 〕**Debes estar en un canal de voz para usar este comando.**`
         );
 
       if (
@@ -33,12 +33,12 @@ module.exports = class QueueCommand extends require("../../Class/Command") {
         message.member.voice.channel.id !== message.guild.me.voice.channel.id
       )
         return message.reply(
-          `${client.emotes.error} | **No estas en el mismo canal que yo.**`
+          `〔 ${client.emotes.error} 〕**No estas en el mismo canal que yo.**`
         );
 
       if (!queue)
         return message.reply(
-          `${client.emotes.error} | **No hay canciones en la lista.**`
+          `〔 ${client.emotes.error} 〕**No hay canciones en la lista.**`
         );
 
       const q =
@@ -62,7 +62,7 @@ module.exports = class QueueCommand extends require("../../Class/Command") {
               )
               .join("\n\n");
       const embedQueue = new Discord.MessageEmbed()
-        .setTitle("__**Lista de canciones del servidor**__")
+        .setTitle("> **Lista de canciones del servidor**")
         .setDescription(q)
         .setColor(client.colores.cyanColor)
         .setThumbnail(message.guild.iconURL({ dynamic: true }))

@@ -31,7 +31,7 @@ module.exports = class DenyCommand extends require("../../Class/Command") {
       if (!message.member.permissions.has(8)) {
         const embed = new Discord.MessageEmbed()
           .setDescription(
-            `${client.emotes.error} | **No tienes el permiso necesario.**\n${client.emotes.warning} | **Permiso requerido:** \`ADMINISTRATOR\`**.**`
+            `〔 ${client.emotes.error} 〕**No tienes el permiso necesario.**\n〔 ${client.emotes.warning} 〕**Permiso requerido:** \`ADMINISTRATOR\`**.**`
           )
           .setImage("https://i.imgur.com/mcqbxZJ.gif")
           .setColor(client.colores.redColor);
@@ -39,11 +39,11 @@ module.exports = class DenyCommand extends require("../../Class/Command") {
       }
       if (!dataChannel)
         return message.reply(
-          `${client.emotes.error} | **No hay un canal de sugerencias establecido en el servidor.**`
+          `〔 ${client.emotes.error} 〕**No hay un canal de sugerencias establecido en el servidor.**`
         );
       if (!code)
         return message.reply(
-          `${client.emotes.error} | **Debes ingresar el código de una sugerencia.**`
+          `〔 ${client.emotes.error} 〕**Debes ingresar el código de una sugerencia.**`
         );
       const data = await SuggestionCode.findOne({
         suggestChannelID: dataChannel.channelID,
@@ -51,28 +51,50 @@ module.exports = class DenyCommand extends require("../../Class/Command") {
       });
       if (!data) {
         return message.reply(
-          `${client.emotes.error} | **El código es inválido o la sugerencia ya fue aceptada ó denegada en el servidor.**`
+          `〔 ${client.emotes.error} 〕**El código es inválido o la sugerencia ya fue aceptada ó denegada en el servidor.**`
         );
       }
       const suggChannel = message.guild.channels.cache.get(
         dataChannel.channelID
       );
-      const suggestedEmbed = await suggChannel.messages.fetch(
-        data.suggestMessageID
-      );
+      if (!suggChannel)
+        return message.reply(
+          `〔 ${client.emotes.error} 〕**No pude encontrar el canal de las sugerencias, tal vez fue eliminado.`
+        );
+      const suggestedEmbed = await suggChannel.messages
+        .fetch(data.suggestMessageID)
+        .catch((e) => {});
+      if (!suggestedEmbed) {
+        await SuggestionCode.deleteOne({
+          suggestChannelID: dataChannel.channelID,
+          suggestCode: code,
+        });
+        return message.reply(
+          `〔 ${client.emotes.error} 〕**No pude encontrar el mensaje con el embed de la sugerencia, tal vez el mensaje fue eliminado.**\n〔 ${client.emotes.warning} 〕**El código de la sugerencia fue eliminado.**`
+        );
+      }
       if (reason.length >= 1020) reason = `${reason.substr(0, 1000)}...`;
       const suggestEmbed = suggestedEmbed.embeds[0];
       suggestEmbed.fields.splice(0, 1);
       const acceptEmbed = new Discord.MessageEmbed(suggestEmbed)
         .setColor(client.colores.redColor)
-        .addField("> **Estado:**", "Rechazada")
-        .addField("> **Razón:**", reason)
-        .addField("> **Rechazada por:**", message.author.tag);
+        .addField("> **Información:**", [
+          `**\`Código:\`** ${code}`,
+          "**`Estado:`** Rechazada",
+          `**\`Sugerente:\`** ${
+            message.guild.members.cache.get(data.suggestAuthor).user.tag
+          } **(${
+            message.guild.members.cache.get(data.suggestAuthor).user.id
+          })**`,
+          `**\`Rechazada por:\`** ${message.author.tag} **(${message.author.id})**`,
+        ])
+        .addField("> **Razón:**", reason);
       message.reply(
-        `${client.emotes.success} | **La sugerencia fue rechazada correctamente.**`
+        `〔 ${client.emotes.success} 〕**La sugerencia fue rechazada correctamente.**`
       );
       await suggestedEmbed.edit(acceptEmbed);
       await SuggestionCode.deleteOne({
+        suggestChannelID: dataChannel.channelID,
         suggestCode: code,
       });
     } catch (e) {

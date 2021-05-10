@@ -26,7 +26,7 @@ module.exports = class AFKCommand extends require("../../Class/Command") {
       const Reason = args.join(" ") || "No especificada";
       if (Reason.length > 101)
         return message.reply(
-          `${client.emotes.error} | **La razón no puede superar los 100 caracteres.**`
+          `〔 ${client.emotes.error} 〕**La razón no puede superar los 100 caracteres.**`
         );
 
       if (!AfkData) {
@@ -55,9 +55,9 @@ module.exports = class AFKCommand extends require("../../Class/Command") {
         )
         .setColor(client.colores.yellowColor)
         .setDescription(
-          `**Desde ahora,** \`${message.author.tag}\` **está en modo AFK.**`
+          `> **Desde ahora,** \`${message.author.tag}\` **está en modo AFK.**`
         )
-        .addField("**Razón:**", `\`${Reason}\``)
+        .addField("> **Razón:**", `${Reason}`)
         .setThumbnail(message.author.displayAvatarURL({ dynamic: true }));
       message.reply(embedAFKUser);
     } catch (e) {

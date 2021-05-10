@@ -53,9 +53,9 @@ module.exports = class MessageDelete {
             : null
         )
         .setColor(message.member.displayHexColor || client.colores.redColor);
-      message.guild.channels.cache
-        .get(ChannelLogs.channelID)
-        .send(embedMessageDelete);
+    //   message.guild.channels.cache
+    //     .get(ChannelLogs.channelID)
+    //     .send(embedMessageDelete);
     } catch (e) {
       this.client.error({
         type: "event",
