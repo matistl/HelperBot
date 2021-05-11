@@ -58,10 +58,17 @@ module.exports = class EvalCommand extends require("../../Class/Command") {
         });
       }
     } catch (e) {
-      message.reply(`${e.name}: ${e.message}`, {
+      let m = await message.reply(`${e.name}: ${e.message}`, {
         code: "js",
         split: { char: "", maxLength: 1999 },
       });
+      for (let o of m) {
+        o.react("836408158120837180");
+        o.awaitReactions((reaction, user) => {
+          if (user.id != message.author.id) return;
+          if (reaction.emoji.id == "836408158120837180") return o.delete();
+        });
+      }
     }
   }
 };
