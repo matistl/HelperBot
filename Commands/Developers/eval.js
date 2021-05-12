@@ -31,13 +31,11 @@ module.exports = class EvalCommand extends require("../../Class/Command") {
       let type = typeof output;
       if (typeof output !== "string")
         output = Util.inspect(output, { depth: 0 });
-
-      // if (output.length >= 2000) output = `${output.substr(0, 1990)}...`;
-
-      let msg = await message.reply(
-        `(${
+      /* (${
           type.substring(0, 1).toUpperCase() + type.substring(1)
-        }) ${replace(output, [
+        })*/
+      let msg = await message.reply(
+        `${replace(output, [
           client.token,
           process.env.MONGO,
           process.env.YOUTUBE_COOKIE,
