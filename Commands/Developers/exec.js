@@ -23,7 +23,7 @@ module.exports = class ExecuteCommand extends require("../../Class/Command") {
 
       if (!args[0])
         return message.reply(
-          `〔 ${client.emotes.error} 〕**Debes ingresar algo para ejecutar.**`
+          `${client.emotes.error} | **Debes ingresar algo para ejecutar.**`
         );
 
       const date = Date.now();

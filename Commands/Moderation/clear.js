@@ -24,7 +24,7 @@ module.exports = class ClearCommand extends require("../../Class/Command") {
       if (!message.member.permissions.has("MANAGE_MESSAGES")) {
         const embed = new Discord.MessageEmbed()
           .setDescription([
-            `〔 ${client.emotes.error} 〕**No tienes el permiso necesario.**`,
+            `${client.emotes.error} | **No tienes el permiso necesario.**`,
             `〔 ${client.emotes.warning} 〕**Permiso Requerido:** \`MANAGE_MESSAGES\`**.**`,
           ])
           .setColor(client.colores.redColor)
@@ -35,7 +35,7 @@ module.exports = class ClearCommand extends require("../../Class/Command") {
       if (!message.guild.me.permissions.has("MANAGE_MESSAGES")) {
         const embed = new Discord.MessageEmbed()
           .setDescription([
-            `〔 ${client.emotes.error} 〕**No tengo el permiso necesario.**`,
+            `${client.emotes.error} | **No tengo el permiso necesario.**`,
             `〔 ${client.emotes.warning} 〕**Permiso Requerido:** \`MANAGE_MESSAGES\`**.**`,
           ])
           .setColor(client.colores.redColor)
@@ -46,12 +46,12 @@ module.exports = class ClearCommand extends require("../../Class/Command") {
 
       if (isNaN(args[0]) || parseInt(args[0]) <= 0)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**Ingresa únicamente números.**`
+          `${client.emotes.error} | **Ingresa únicamente números.**`
         );
 
       if (parseInt(args[0]) > 100)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**La cantidad no puede ser más deo 100.**`
+          `${client.emotes.error} | **La cantidad no puede ser más deo 100.**`
         );
 
       deleteAmount = parseInt(args[0]);
@@ -59,7 +59,7 @@ module.exports = class ClearCommand extends require("../../Class/Command") {
       await message.channel.bulkDelete(deleteAmount + 1, true);
 
       message.channel.send(
-          `〔 ${client.emotes.sucess} 〕**Se eliminaron** \`${deleteAmount}\` **mensajes exitosamente.**`
+          `${client.emotes.success} | **Se eliminaron** \`${deleteAmount}\` **mensajes exitosamente.**`
         )
         .then((x) => x.delete({ timeout: 7000 }));
     } catch (e) {

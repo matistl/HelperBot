@@ -30,12 +30,12 @@ module.exports = class NameCommand extends require("../../Class/Command") {
 
       if (!role)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**Debes mencionar un rol.**`
+          `${client.emotes.error} | **Debes mencionar un rol.**`
         );
 
       if (!message.guild.roles.cache.has(role.id))
         return message.reply(
-          `〔 ${client.emotes.error} 〕**El rol debe ser de este servidor.**`
+          `${client.emotes.error} | **El rol debe ser de este servidor.**`
         );
 
       let i = 0;
@@ -44,7 +44,7 @@ module.exports = class NameCommand extends require("../../Class/Command") {
         .map((x) => `[${++i}] ${x.user.tag}`);
       if (!role.members.size)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**No hay ninguna persona con el rol.**`
+          `${client.emotes.error} | **No hay ninguna persona con el rol.**`
         );
       const listaRoles =
         membersxd.length > 25

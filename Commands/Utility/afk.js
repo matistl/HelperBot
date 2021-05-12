@@ -26,7 +26,7 @@ module.exports = class AFKCommand extends require("../../Class/Command") {
       const Reason = args.join(" ") || "No especificada";
       if (Reason.length > 101)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**La razón no puede superar los 100 caracteres.**`
+          `${client.emotes.error} | **La razón no puede superar los 100 caracteres.**`
         );
 
       if (!AfkData) {

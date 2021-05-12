@@ -24,7 +24,7 @@ module.exports = class DJSCommand extends require("../../Class/Command") {
     try {
       if (!args[0])
         return message.reply(
-          `〔 ${client.emotes.error} 〕**Debes ingresar algo para buscar.**`
+          `${client.emotes.error} | **Debes ingresar algo para buscar.**`
         );
       fetch(
         `https://djsdocs.sorta.moe/v2/embed?src=stable&q=${encodeURIComponent(
@@ -38,7 +38,7 @@ module.exports = class DJSCommand extends require("../../Class/Command") {
         })
         .catch((err) => {
           message.reply(
-            `〔 ${client.emotes.error} 〕**Ocurrió un problema al momento de la busqueda.**`
+            `${client.emotes.error} | **Ocurrió un problema al momento de la busqueda.**`
           );
         });
     } catch (e) {

@@ -28,7 +28,7 @@ module.exports = class WarningsCommand extends require("../../Class/Command") {
         message.member;
       if (!user)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**Debes mencionar o darme la ID de un mimebro del servidor.**`
+          `${client.emotes.error} | **Debes mencionar o darme la ID de un mimebro del servidor.**`
         );
       // let a = (user) => await message.guild.members.cache.get(user.id).user.tag;
       db.findOne(
@@ -37,7 +37,7 @@ module.exports = class WarningsCommand extends require("../../Class/Command") {
           if (err) throw err;
           if (!data)
             return message.reply(
-              `〔 ${client.emotes.error} 〕**Ese miembro no tiene casos registrados por el momento.**`
+              `${client.emotes.error} | **Ese miembro no tiene casos registrados por el momento.**`
             );
           if (!data.content.length) {
             await db.findOneAndDelete({
@@ -46,7 +46,7 @@ module.exports = class WarningsCommand extends require("../../Class/Command") {
             });
 
             return message.reply(
-              `〔 ${client.emotes.error} 〕**Ese miembro no tiene casos registrados por el momento.**`
+              `${client.emotes.error} | **Ese miembro no tiene casos registrados por el momento.**`
             );
           }
           if (data.content.length) {

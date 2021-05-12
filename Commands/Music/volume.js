@@ -26,7 +26,7 @@ module.exports = class VolumeCommand extends require("../../Class/Command") {
 
       if (!message.member.voice.channel)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**Debes estar en un canal de voz para usar este comando.**`
+          `${client.emotes.error} | **Debes estar en un canal de voz para usar este comando.**`
         );
 
       if (
@@ -34,32 +34,32 @@ module.exports = class VolumeCommand extends require("../../Class/Command") {
         message.member.voice.channel.id !== message.guild.me.voice.channel.id
       )
         return message.reply(
-          `〔 ${client.emotes.error} 〕**No estas en el mismo canal que yo.**`
+          `${client.emotes.error} | **No estas en el mismo canal que yo.**`
         );
 
       if (!serverQueue)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**No hay canciones en la lista.**`
+          `${client.emotes.error} | **No hay canciones en la lista.**`
         );
       const volume = parseInt(args[0]);
       if (!args[0])
         return message.reply(
-          `〔 ${client.emotes.error} 〕**Debes ingresar una cantidad.**`
+          `${client.emotes.error} | **Debes ingresar una cantidad.**`
         );
       if (isNaN(volume))
         return message.reply(
-          `〔 ${client.emotes.error} 〕**Debes ingresar únicamente números.**`
+          `${client.emotes.error} | **Debes ingresar únicamente números.**`
         );
       if (
         Math.round(parseInt(args[0])) < 1 ||
         Math.round(parseInt(args[0])) > 200
       )
         return message.reply(
-          `〔 ${client.emotes.error} 〕**Debes ingresar un número entre el:** \`1\` **y el** \`200\`**.**`
+          `${client.emotes.error} | **Debes ingresar un número entre el:** \`1\` **y el** \`200\`**.**`
         );
       client.distube.setVolume(message, volume);
       message.reply(
-        `〔 ${client.emotes.success} 〕**El volumen ahora es de:** \`${volume}%\`.`
+        `${client.emotes.success} | **El volumen ahora es de:** \`${volume}%\`.`
       );
     } catch (e) {
       client.error({

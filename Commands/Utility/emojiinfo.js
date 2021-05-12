@@ -25,7 +25,7 @@ module.exports = class EmojiInfoCommand extends require("../../Class/Command") {
       const emojiProvided = args[0];
       if (!emojiProvided)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**Debes ingresar un emoji.**`
+          `${client.emotes.error} | **Debes ingresar un emoji.**`
         );
 
       const match =
@@ -34,12 +34,12 @@ module.exports = class EmojiInfoCommand extends require("../../Class/Command") {
 
       if (!match || !match[1])
         return message.reply(
-          `〔 ${client.emotes.error} 〕**Debes ingresar un emoji válido, debe ser de este servidor.**`
+          `${client.emotes.error} | **Debes ingresar un emoji válido, debe ser de este servidor.**`
         );
       let emoji = message.guild.emojis.cache.get(match[1]);
       if (!emoji)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**Debes ingresar un emoji válido, debe ser de este servidor.**`
+          `${client.emotes.error} | **Debes ingresar un emoji válido, debe ser de este servidor.**`
         );
       let checkOrCross = (bool) =>
         bool

@@ -30,7 +30,7 @@ module.exports = class KickCommand extends require("../../Class/Command") {
       if (!perms) {
         const embed = new Discord.MessageEmbed()
           .setDescription([
-            `〔 ${client.emotes.error} 〕**No tienes el permiso necesario.**`,
+            `${client.emotes.error} | **No tienes el permiso necesario.**`,
             `〔 ${client.emotes.warning} 〕**Permiso Requerido:** \`KICK_MEMBERS\`**.**`,
           ])
           .setImage("https://i.imgur.com/9PlwvB4.gif")
@@ -41,7 +41,7 @@ module.exports = class KickCommand extends require("../../Class/Command") {
       if (!message.guild.me.permissions.has("KICK_MEMBERS")) {
         const embed = new Discord.MessageEmbed()
           .setDescription([
-            `〔 ${client.emotes.error} 〕**No tengo el permiso necesario.**`,
+            `${client.emotes.error} | **No tengo el permiso necesario.**`,
             `〔 ${client.emotes.warning} 〕**Permiso Requerido:** \`KICK_MEMBERS\`**.**`,
           ])
           .setImage("https://i.imgur.com/9PlwvB4.gif")
@@ -51,17 +51,17 @@ module.exports = class KickCommand extends require("../../Class/Command") {
 
       if (!user)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**Debes mencionar o darme la ID de un miembro del servidor.**`
+          `${client.emotes.error} | **Debes mencionar o darme la ID de un miembro del servidor.**`
         );
 
       if (user.id === message.author.id)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**No puedes expulsarte a ti mismo.**`
+          `${client.emotes.error} | **No puedes expulsarte a ti mismo.**`
         );
 
       if (user.id === client.user.id)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**No puedo autoexpulsarme.**`
+          `${client.emotes.error} | **No puedo autoexpulsarme.**`
         );
 
       if (
@@ -69,17 +69,17 @@ module.exports = class KickCommand extends require("../../Class/Command") {
         user.roles.highest.comparePositionTo(message.member.roles.highest) >= 0
       )
         return message.reply(
-          `〔 ${client.emotes.error} 〕**Basándome en la jerarquía de roles, no puedes expulsar a ese miembro.**`
+          `${client.emotes.error} | **Basándome en la jerarquía de roles, no puedes expulsar a ese miembro.**`
         );
 
       if (razon.length > 101)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**La razón no puede superar los 100 caracteres.**`
+          `${client.emotes.error} | **La razón no puede superar los 100 caracteres.**`
         );
 
       if (!message.guild.member(user).kickable)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**El miembro mencionado no puedo expulsarlo.**`
+          `${client.emotes.error} | **El miembro mencionado no puedo expulsarlo.**`
         );
       client.modlogs(
         {
@@ -91,7 +91,7 @@ module.exports = class KickCommand extends require("../../Class/Command") {
         message
       );
       message.reply(
-        `〔 ${client.emotes.success} 〕**El usuario:** \`${user.user.tag}\` **fue expulsado exitosamente.**`
+        `${client.emotes.success} | **El usuario:** \`${user.user.tag}\` **fue expulsado exitosamente.**`
       );
       await message.guild.member(user).kick({ reason: razon });
     } catch (e) {

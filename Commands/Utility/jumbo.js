@@ -23,14 +23,14 @@ module.exports = class JumboCommand extends require("../../Class/Command") {
     try {
       if (!args[0])
         return message.reply(
-          `〔 ${client.emotes.error} 〕**Debes ingresar un emoji.**`
+          `${client.emotes.error} | **Debes ingresar un emoji.**`
         );
 
       var emoji = Discord.Util.parseEmoji(args[0]);
 
       if (emoji.id == null)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**Debes ingresar un emoji válido.**`
+          `${client.emotes.error} | **Debes ingresar un emoji válido.**`
         );
 
       const embedEmoji = new Discord.MessageEmbed()

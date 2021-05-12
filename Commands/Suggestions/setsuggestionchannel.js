@@ -29,7 +29,7 @@ module.exports = class SetSuggestionChannelCommand extends (
       if (!message.member.permissions.has(8)) {
         const embed = new Discord.MessageEmbed()
           .setDescription(
-            `〔 ${client.emotes.error} 〕**No tienes el permiso necesario.**\n〔 ${client.emotes.warning} 〕**Permiso requerido:** \`ADMINISTRATOR\`**.**`
+            `${client.emotes.error} | **No tienes el permiso necesario.**\n〔 ${client.emotes.warning} 〕**Permiso requerido:** \`ADMINISTRATOR\`**.**`
           )
           .setImage("https://i.imgur.com/mcqbxZJ.gif")
           .setColor(client.colores.redColor);
@@ -38,24 +38,24 @@ module.exports = class SetSuggestionChannelCommand extends (
 
       if (!channelXD)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**Debes mencionar un canal.**`
+          `${client.emotes.error} | **Debes mencionar un canal.**`
         );
 
       if (!message.guild.channels.cache.get(channelXD.id))
         return message.reply(
-          `〔 ${client.emotes.error} 〕**El canal mencionado debe ser de este servidor.**`
+          `${client.emotes.error} | **El canal mencionado debe ser de este servidor.**`
         );
 
       if (channelXD.type !== "text")
         return message.reply(
-          `〔 ${client.emotes.error} 〕**Debes mencionar únicamente a canales de texto.**`
+          `${client.emotes.error} | **Debes mencionar únicamente a canales de texto.**`
         );
 
       if (!channelXD.permissionsFor(message.guild.me).has("VIEW_CHANNEL"))
         return message.reply(
           new Discord.MessageEmbed()
             .setDescription(
-              `〔 ${client.emotes.error} 〕**No tengo los permisos necesarios en el canal mencionado.**\n${client.emotes.waring} | **Permiso requerido:** \`VIEW_CHANNEL\`.`
+              `${client.emotes.error} | **No tengo los permisos necesarios en el canal mencionado.**\n${client.emotes.waring} | **Permiso requerido:** \`VIEW_CHANNEL\`.`
             )
             .setColor(client.colores.redColor)
             .setImage("https://i.imgur.com/ecUiHLM.gif")
@@ -65,7 +65,7 @@ module.exports = class SetSuggestionChannelCommand extends (
         return message.reply(
           new Discord.MessageEmbed()
             .setDescription(
-              `〔 ${client.emotes.error} 〕**No tengo los permisos necesarios en el canal mencionado.**\n${client.emotes.waring} | **Permiso requerido:** \`SEND_MESSAGES\`.`
+              `${client.emotes.error} | **No tengo los permisos necesarios en el canal mencionado.**\n${client.emotes.waring} | **Permiso requerido:** \`SEND_MESSAGES\`.`
             )
             .setColor(client.colores.redColor)
             .setImage("https://i.imgur.com/7DjLk0n.gif")
@@ -86,7 +86,7 @@ module.exports = class SetSuggestionChannelCommand extends (
         : await sv.save();
 
       message.reply(
-        `〔 ${client.emotes.success} 〕**El canal:** \`#${
+        `${client.emotes.success} | **El canal:** \`#${
           message.mentions.channels.first().name
         }\` **fue establecido como el canal de las sugerencias.**`
       );

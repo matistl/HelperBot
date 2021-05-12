@@ -29,14 +29,14 @@ module.exports = class ColorCommand extends require("../../Class/Command") {
 
       if (!hexColor)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**Ingresa un color Hexadecimal.**`
+          `${client.emotes.error} | **Ingresa un color Hexadecimal.**`
         );
       let color = hexColor.replace(/#+/g, "");
       let no = isHexcolor(`#${color}`);
 
       if (!no)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**Ingresa un color Hexadecimal válido.**`
+          `${client.emotes.error} | **Ingresa un color Hexadecimal válido.**`
         );
 
       await canvacord.Canvas.color(`#${color}`);

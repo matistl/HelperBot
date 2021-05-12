@@ -31,7 +31,7 @@ module.exports = class AcceptCommand extends require("../../Class/Command") {
       if (!message.member.permissions.has(8)) {
         const embed = new Discord.MessageEmbed()
           .setDescription(
-            `〔 ${client.emotes.error} 〕**No tienes el permiso necesario.**\n〔 ${client.emotes.warning} 〕**Permiso requerido:** \`ADMINISTRATOR\`**.**`
+            `${client.emotes.error} | **No tienes el permiso necesario.**\n〔 ${client.emotes.warning} 〕**Permiso requerido:** \`ADMINISTRATOR\`**.**`
           )
           .setImage("https://i.imgur.com/mcqbxZJ.gif")
           .setColor(client.colores.redColor);
@@ -39,11 +39,11 @@ module.exports = class AcceptCommand extends require("../../Class/Command") {
       }
       if (!dataChannel)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**No hay un canal de sugerencias establecido en el servidor.**`
+          `${client.emotes.error} | **No hay un canal de sugerencias establecido en el servidor.**`
         );
       if (!code)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**Debes ingresar el código de una sugerencia.**`
+          `${client.emotes.error} | **Debes ingresar el código de una sugerencia.**`
         );
       const data = await SuggestionCode.findOne({
         suggestChannelID: dataChannel.channelID,
@@ -51,7 +51,7 @@ module.exports = class AcceptCommand extends require("../../Class/Command") {
       });
       if (!data) {
         return message.reply(
-          `〔 ${client.emotes.error} 〕**El código es inválido o la sugerencia ya fue aceptada ó denegada en el servidor.**`
+          `${client.emotes.error} | **El código es inválido o la sugerencia ya fue aceptada ó denegada en el servidor.**`
         );
       }
       const suggChannel = message.guild.channels.cache.get(
@@ -59,7 +59,7 @@ module.exports = class AcceptCommand extends require("../../Class/Command") {
       );
       if (!suggChannel)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**No pude encontrar el canal de las sugerencias, tal vez fue eliminado.`
+          `${client.emotes.error} | **No pude encontrar el canal de las sugerencias, tal vez fue eliminado.`
         );
       const suggestedEmbed = await suggChannel.messages
         .fetch(data.suggestMessageID)
@@ -70,7 +70,7 @@ module.exports = class AcceptCommand extends require("../../Class/Command") {
           suggestCode: code,
         });
         return message.reply(
-          `〔 ${client.emotes.error} 〕**No pude encontrar el mensaje con el embed de la sugerencia, tal vez el mensaje fue eliminado.**\n〔 ${client.emotes.warning} 〕**El código de la sugerencia fue eliminado.**`
+          `${client.emotes.error} | **No pude encontrar el mensaje con el embed de la sugerencia, tal vez el mensaje fue eliminado.**\n〔 ${client.emotes.warning} 〕**El código de la sugerencia fue eliminado.**`
         );
       }
       if (reason.length >= 1020) reason = `${reason.substr(0, 1000)}...`;
@@ -90,7 +90,7 @@ module.exports = class AcceptCommand extends require("../../Class/Command") {
         ])
         .addField("> **Razón:**", reason);
       message.reply(
-        `〔 ${client.emotes.success} 〕**La sugerencia fue aceptada correctamente.**`
+        `${client.emotes.success} | **La sugerencia fue aceptada correctamente.**`
       );
       await suggestedEmbed.edit(acceptEmbed);
       await SuggestionCode.deleteOne({

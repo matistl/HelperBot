@@ -24,7 +24,7 @@ module.exports = class ReloadCommand extends require("../../Class/Command") {
       const folderName = args[0];
       if (!folderName)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**Ingresa una categoría.**`
+          `${client.emotes.error} | **Ingresa una categoría.**`
         );
       let xd = await client.commands.filter((x) =>
         x.information.category.includes(folderName)
@@ -32,18 +32,18 @@ module.exports = class ReloadCommand extends require("../../Class/Command") {
 
       if (!xd.size)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**La categoría dada no tiene comandos o no existe.**`
+          `${client.emotes.error} | **La categoría dada no tiene comandos o no existe.**`
         );
 
       const commandName = args.slice(1).join(" ");
       if (!commandName)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**Ingresa un comando.**`
+          `${client.emotes.error} | **Ingresa un comando.**`
         );
       const check = await client.commands.has(commandName);
       if (!check)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**Ingresa un comando válido.**`
+          `${client.emotes.error} | **Ingresa un comando válido.**`
         );
 
       delete require.cache[
@@ -53,7 +53,7 @@ module.exports = class ReloadCommand extends require("../../Class/Command") {
       const pull = require(`../../Commands/${folderName}/${commandName}.js`);
       client.commands.set(commandName, new pull(client));
       message.reply(
-        `〔 ${client.emotes.success} 〕**El comando:** \`${commandName}\` **ha sido recargado.**`
+        `${client.emotes.success} | **El comando:** \`${commandName}\` **ha sido recargado.**`
       );
     } catch (e) {
       client.error({

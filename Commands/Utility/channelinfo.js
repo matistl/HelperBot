@@ -38,7 +38,7 @@ module.exports = class ChannelInfoCommand extends (
         message.guild.channels.cache.get(args[0]) || message.channel;
       if (!message.guild.channels.cache.has(channel.id))
         return message.reply(
-          `〔 ${client.emotes.error} 〕**Menciona únicamente a canales del servidor.**`
+          `${client.emotes.error} | **Menciona únicamente a canales del servidor.**`
         );
       const infoEmbed = new Discord.MessageEmbed()
         .setTitle("> **Información del canal**")

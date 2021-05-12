@@ -1,4 +1,4 @@
-const {Game} = require("../../Class/Trivia.js");
+const { Trivia, Guilds } = require("../../Class/Trivia.js");
 
 module.exports = class TriviaCommand extends require("../../Class/Command") {
   constructor(client) {
@@ -21,9 +21,12 @@ module.exports = class TriviaCommand extends require("../../Class/Command") {
   }
   async run(message, args) {
     const client = this.client;
-    try { 
-    if(Game.get_guilds.includes(message.guild.id)) return message.reply(`〔 ${client.emotes.error} 〕**Ya hay una partida de trivia en el servidor, espera a que termine para poder jugar.**`);
-    new Game(message, args); 
+    try {
+      if (Guilds.includes(message.guild.id))
+        return message.reply(
+          `${client.emotes.error} | **Ya hay una partida de trivia en el servidor, espera a que termine para poder jugar.**`
+        );
+      new Trivia(client, message, args);
     } catch (e) {
       client.error({
         name: this.information.name,

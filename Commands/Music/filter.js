@@ -26,7 +26,7 @@ module.exports = class FilterCommand extends require("../../Class/Command") {
 
             if (!message.member.voice.channel)
                 return message.reply(
-                    `〔 ${client.emotes.error} 〕**Debes estar en un canal de voz para usar este comando.**`
+                    `${client.emotes.error} | **Debes estar en un canal de voz para usar este comando.**`
                 );
 
             if (
@@ -34,17 +34,17 @@ module.exports = class FilterCommand extends require("../../Class/Command") {
                 message.member.voice.channel.id !== message.guild.me.voice.channel.id
             )
                 return message.reply(
-                    `〔 ${client.emotes.error} 〕**No estas en el mismo canal que yo.**`
+                    `${client.emotes.error} | **No estas en el mismo canal que yo.**`
                 );
 
             if (!queue)
                 return message.reply(
-                    `〔 ${client.emotes.error} 〕**No hay canciones en la lista.**`
+                    `${client.emotes.error} | **No hay canciones en la lista.**`
                 );
 
             if (!args[0])
                 return message.reply(
-                    `〔 ${client.emotes.error} 〕**Especifica que filtro quieres activar.** \`${prefix}filterlist\``
+                    `${client.emotes.error} | **Especifica que filtro quieres activar.** \`${prefix}filterlist\``
                 );
 
             // if (args[0] === "list" || "List") {
@@ -63,10 +63,10 @@ module.exports = class FilterCommand extends require("../../Class/Command") {
                     client.distube.setFilter(message, args[0]);
                 else if (args[0])
                     return message.reply(
-                        `〔 ${client.emotes.error} 〕**El filtro ingresado no es válido.** \`${prefix}filterlist\``
+                        `${client.emotes.error} | **El filtro ingresado no es válido.** \`${prefix}filterlist\``
                     );
             message.reply(
-                `〔 ${client.emotes.success} 〕**El filtro actual es:** \`${
+                `${client.emotes.success} | **El filtro actual es:** \`${
                 queue.filter || "Off"
                 }\``
             );

@@ -30,7 +30,7 @@ module.exports = class WarnCommand extends require("../../Class/Command") {
       if (!permisosUser) {
         const embed = new Discord.MessageEmbed()
           .setDescription([
-            `〔 ${client.emotes.error} 〕**No tienes el permiso necesario.**`,
+            `${client.emotes.error} | **No tienes el permiso necesario.**`,
             `〔 ${client.emotes.warning} 〕**Permiso Requerido:** \`MANAGE_MESSAGES\`**.**`,
           ])
           .setColor(client.colores.redColor)
@@ -39,16 +39,16 @@ module.exports = class WarnCommand extends require("../../Class/Command") {
       }
       if (!user)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**Debes mencionar o darme la ID de un miembro del servidor.**`
+          `${client.emotes.error} | **Debes mencionar o darme la ID de un miembro del servidor.**`
         );
       if (user.id === message.author.id)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**No puedes advertirte a ti mismo.**`
+          `${client.emotes.error} | **No puedes advertirte a ti mismo.**`
         );
 
       if (user.id === client.user.id)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**No puedo auto advertirme.**`
+          `${client.emotes.error} | **No puedo auto advertirme.**`
         );
 
       if (
@@ -56,11 +56,11 @@ module.exports = class WarnCommand extends require("../../Class/Command") {
         user.roles.highest.comparePositionTo(message.member.roles.highest) >= 0
       )
         return message.reply(
-          `〔 ${client.emotes.error} 〕**Basándome en la jerarquía de roles, no puedes advertir a ese miembro.**`
+          `${client.emotes.error} | **Basándome en la jerarquía de roles, no puedes advertir a ese miembro.**`
         );
       if (razon.length > 101)
         return message.reply(
-          `〔 ${client.emotes.error} 〕**La razón no puede superar los 100 caracteres.**`
+          `${client.emotes.error} | **La razón no puede superar los 100 caracteres.**`
         );
 
       await db.findOne(
@@ -104,7 +104,7 @@ module.exports = class WarnCommand extends require("../../Class/Command") {
         message
       );
       message.reply(
-        `〔 ${client.emotes.success} 〕**El miembro:** \`${user.user.tag}\` **fue advertido correctamente.**`
+        `${client.emotes.success} | **El miembro:** \`${user.user.tag}\` **fue advertido correctamente.**`
       );
     } catch (e) {
       client.error({
